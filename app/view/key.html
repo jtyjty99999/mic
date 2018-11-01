@@ -279,6 +279,7 @@ ul.ztree {
                 beforeRename: beforeRename,
                 onRemove: onRemove,
                 onRename: zTreeOnRename,
+                onClick: onClick
             }
         };
 
@@ -448,39 +449,49 @@ ul.ztree {
             $("#clearChildren").bind("click", clearChildren);
         });
 
-        //javascript初始化
+        var key_id;
+
         $('#page3').bPage({
-            url: '/keyunit',
-            //开启异步处理模式
-            asyncLoad: true,
-            //关闭服务端页面模式
-            serverSidePage: false,
-            asyncType: 'GET',
-            pageSize:'8',
-            pageSizeMenu: [8],
-            //数据自定义填充
-            render: function (data) {
-                let html = '';
-                data.list.forEach(function(d){
-                        html += `<div class="col-xs-6 col-sm-3 placeholder">
-                            <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=="
-                                width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
-                            <h4>价格：${d.price}</h4>
-                            <span class="text-muted">${d.name}</span>
-                        </div>`
-                    });
-                    console.log(html);
-                    $('#list').html(html)
-            },
-            params: function () {
-                return {
-                    userName: 'zhangsan',
-                    age: 42
-                };
-            }
-        });
+                url: '/keyunit',
+                //开启异步处理模式
+                asyncLoad: true,
+                //关闭服务端页面模式
+                serverSidePage: false,
+                asyncType: 'GET',
+                pageSize:'8',
+                pageSizeMenu: [8],
+                //数据自定义填充
+                render: function (data) {
+                    let html = '';
+                    data.list.forEach(function(d){
+                            html += `<div class="col-xs-6 col-sm-3 placeholder">
+                                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=="
+                                    width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
+                                <h4>价格：${d.price}</h4>
+                                <span class="text-muted">${d.name}</span>
+                            </div>`
+                        });
+                        $('#list').html(html)
+                },
+                params: function () {
+                    return {
+                        key_id,
+                    };
+                }
+            });
+
+        function onClick(event, treeId, treeNode){
+            window.key_id = treeNode.id;
+            console.log(treeNode.id);
+            $('#page3').bPageRefresh({key_id});
+
+        }
+
 
         $('#uploadKeyUnit').click(function(){
+            if(!key_id){
+                alert('请先选择一个颗粒度');
+            }
             $.ajax({
                 type: "POST",
                 url: "/keyunit",
@@ -490,10 +501,11 @@ ul.ztree {
                     url :$('#form-field-url').val(),
                     description :$('#form-field-description').val(),
                     oper:'add',
-                    key_id : 1,
+                    key_id : window.key_id,
                 },
                 success: function (data) {
-                    $('#modal-form').modal('hide')
+                    $('#modal-form').modal('hide');
+                    $('#page3').bPageRefresh({key_id});
                 }
             });   
         })

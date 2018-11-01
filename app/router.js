@@ -53,6 +53,9 @@ module.exports = app => {
   app.post('/keyunit', admin, app.controller.keyUnit.main);
   app.get('/keyunit', admin, app.controller.keyUnit.list);
 
+  //文件上传
+  app.post('/video/uploadBatch', app.controller.video.upload);
+
   // 微信api登录
 
   app.post('/api/login', app.controller.admin.loginByWechat)

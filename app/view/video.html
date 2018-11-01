@@ -2,6 +2,14 @@
 
 {% block style %}
 
+<style>
+#addBatch{
+    width:160px;
+    background:#1fb1f2!important
+    }
+</style>
+
+
 {% endblock %}
 
 {% block header %}
@@ -10,6 +18,8 @@
 
 {% block body %}
 <!-- Main Content -->
+
+
 
 <div class="main-content">
     <div class="main-content-inner">
@@ -21,7 +31,50 @@
                     <div class="operator">
                         <button class="btn btn-success" id="search">搜索</button>
                         <button class="btn btn-success" id="add">添加</button>
+                        <button href="#modal-form" role="button" data-toggle="modal" class="btn btn-success" id="addBatch">批量导入</button>
                     </div>
+
+
+                    <div id="modal-form" class="modal" tabindex="-1">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="blue bigger">上传视频／图片</h4>
+                                    </div>
+                    
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <div class="col-xs-12 col-sm-12">
+                                                <form action="">
+                                                        <div class="form-group">
+                                                                <label for="form-field-url">excel文件</label>
+                                
+                                                                <div>
+                                                                    <input type="file" id="form-field-url" placeholder="文件路径" value="" />
+                                                                    
+                                                                </div>
+                                                            </div>
+                                                </form>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                    
+                                    <div class="modal-footer">
+                                        <button class="btn btn-sm" data-dismiss="modal">
+                                            <i class="ace-icon fa fa-times"></i>
+                                            取消
+                                        </button>
+                    
+                                        <button class="btn btn-sm btn-primary" id="uploadExcel">
+                                            <i class="ace-icon fa fa-check"></i>
+                                            确定
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!-- PAGE CONTENT ENDS -->
 
 
                     <table id="grid-table"></table>
@@ -42,6 +95,29 @@
 {% block script %}
 <!-- inline scripts related to this page -->
 <script type="text/javascript">
+
+  $('#uploadExcel').click(function(e) {
+        e.preventDefault();
+        var formData = new FormData();
+        // Attach file
+        formData.append('image', $('input[type=file]')[0].files[0]);
+        // console.log(formData);
+        $.ajax({
+            url: '/video/uploadBatch',
+            data: formData,
+            method: 'POST',
+            contentType: false, // NEEDED, DON'T OMIT THIS (requires jQuery 1.6+)
+            processData: false, // NEEDED, DON'T OMIT THIS
+            success: function(result) {
+                console.log(result);
+                //location.href = result.url;
+            },
+            error: function(responseStr) {
+                alert("error", responseStr);
+            }
+        })
+    });
+
     window.categorys = JSON.parse($('#categorys').val());
     window.users = JSON.parse($('#users').val());
 
@@ -247,6 +323,12 @@
             return $(elem).find("input:radio:checked").val();
         }
     }
+
+    function formatLink(cellValue, options, rowObject) {
+            var linkHtml = "<a href='/manager/video/detail?id="+ rowObject.id+"'>详情</a>";
+            return linkHtml;
+        }
+        
     $(grid_selector).jqGrid({
         //direction: "rtl",
         //data: grid_data,
@@ -259,12 +341,13 @@
             //'userName': userName,
         },
         height: 400,
-        colNames: ['编号','文件路径', '名称', '备注', '类目', '价格', '需求方', '上传人', '时长', '格式','场景颗粒度', '特效颗粒度', '模特颗粒度', '配音颗粒度', '字幕颗粒度','操作'],
+        colNames: ['编号','查看','文件路径', '名称', '备注', '类目', '价格', '需求方', '上传人', '时长', '格式','场景颗粒度', '特效颗粒度', '模特颗粒度', '配音颗粒度', '字幕颗粒度','操作'],
 
         //{id:6,name:"Desktop cxzczzxc",work_id:"222",phone:4234324,status:0},
         colModel: [
-            { name: 'id', index: 'id', width: 60, sorttype: "int", editable: false },
-            { name: 'url', index: 'url', hidden:true,width: 150, editable: true, editoptions: { size: "20", maxlength: "200" } },
+            { name: 'id', index: 'id', width: 60, sorttype: "int", editable: false},
+            { name: 'id', index: 'id', width: 60, sorttype: "int", editable: false,formatter: formatLink },
+            { name: 'url', index: 'url', hidden: true, width: 150, editable: true, editoptions: { size: "20", maxlength: "200" } },
             { name: 'name', index: 'name', width: 150, editable: true, editoptions: { size: "20", maxlength: "100" } },
             { name: 'description', index: 'description', width: 150, editable: true, editoptions: { size: "20", maxlength: "100" } },
             { name: 'category_id', index: 'category_id', formatter: formatCategory, width: 70, editable: true, edittype: "select", editoptions: { value: categoryValue } },

@@ -15,9 +15,8 @@ exports.loginByWechat = function* () {
     console.log(e);
     this.body = '';
   }
-
+  
 }
-
 
 const loginRule = {
   name: 'name',
@@ -27,21 +26,21 @@ const loginRule = {
 
 exports.index = function* () {
   const work_id = this.session.user.id;
-  yield this.render('index.html',{
-    current:"people",
-    key:yield this.service.keyUnit.count({
+  yield this.render('index.html', {
+    current: "people",
+    key: yield this.service.keyUnit.count({
       work_id
     }),
-    video:yield this.service.video.count({
+    video: yield this.service.video.count({
       work_id
     }),
-    business:yield this.service.business.count({
+    business: yield this.service.business.count({
       work_id
     }),
-    bill:yield this.service.bill.count({
+    bill: yield this.service.bill.count({
       work_id
     }),
-    title:"员工信息"
+    title: "员工信息"
   });
 
 };
@@ -51,17 +50,17 @@ exports.list = function* () {
   const pageNum = +this.query.pageNumber || 1;
   const pageSize = +this.query.pageSize || 100;
   const work_id = this.session.user.id;
- 
+
   let result, total;
   result = yield this.service.workerLog.listByUser(pageNum, pageSize, work_id);
   total = yield this.service.workerLog.count();
 
   this.body = {
-      pageNumber: pageNum,
-      pageSize,
-      totalRow:total, 
-      totalPage: total > pageSize ? total % pageSize : 1,
-      list: result
+    pageNumber: pageNum,
+    pageSize,
+    totalRow: total,
+    totalPage: total > pageSize ? total % pageSize : 1,
+    list: result
   };
   /*
   this.body = {
@@ -115,9 +114,9 @@ exports.list = function* () {
 
 exports.adminLogin = function* () {
 
-    yield this.render('login.html', {
-      
-    });
+  yield this.render('login.html', {
+
+  });
 };
 
 exports.adminLogout = function* () {
@@ -133,12 +132,12 @@ exports.login = function* () {
   const password = this.request.body.password;
   const login = yield this.service.people.login(name, password);
 
-  if (login&&login.length!==0) {
+  if (login && login.length !== 0) {
     this.session.adminLogin = true;
     this.session.user = login[0];
-    if(this.session.user.auth === 0){
+    if (this.session.user.auth === 0) {
       this.session.user.position = '管理员'
-    }else{
+    } else {
       this.session.user.position = '员工'
     }
     console.log(99999);

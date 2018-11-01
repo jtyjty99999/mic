@@ -1,19 +1,73 @@
 'use strict';
 
 const moment = require('moment');
-const marked = require('marked');
-const counter = require('../lib/count');
+const path = require('path');
+const fs = require('fs');
 
+function saveStream(stream, filepath) {
+  return new Promise((resolve, reject) => {
+    const ws = fs.createWriteStream(filepath);
+    stream.pipe(ws);
+    ws.on('error', reject);
+    ws.on('finish', resolve);
+  });
+}
+
+exports.upload = function* () {
+
+  const stream = yield this.getFileStream();
+  const filepath = path.join(this.app.config.logger.dir, 'multipart-test-file.xlsx');
+  yield saveStream(stream, filepath);
+  const self = this;
+  console.log(stream.filename);
+  console.log(fs.readFileSync(filepath));
+
+  // 解析excel
+
+  // 批量添加
+  /*
+  yield this.service.video.insert({
+    work_id,
+    name,
+    description,
+    category_id,
+    price,
+    business,
+    time,
+    format,
+    url,
+    is_audio,
+    is_model,
+    is_scene,
+    is_show,
+    is_text
+  });*/
+  this.body = 111;
+  return
+
+  const plus = 'http://pic-cloud-hn.b0.upaiyun.com/';
+  const filename = moment(Date.now()).format('YYYY-MM-DD') + '/' + stream.filename;
+  let result = yield this.app.upyun.putFile(filename, fs.readFileSync(filepath), 'text/plain', true, null);
+  console.log(plus + filename);
+  if (result) {
+    this.body = plus + filename;
+  } else {
+    this.body = '上传失败';
+  }
+
+  //const object = yield this.app.upyun.put(moment(Date.now()).format('YYYY-MM-DD') + '/' + stream.filename, stream);
+
+};
 
 exports.index = function* () {
   let categorys = yield this.service.category.list();
-  categorys = categorys.filter((d)=>{return d.level === 1});
+  categorys = categorys.filter((d) => { return d.level === 1 });
   let users = yield this.service.people.listAll()
-  yield this.render('video.html',{
-    current:"video",
+  yield this.render('video.html', {
+    current: "video",
     categorys: JSON.stringify(categorys),
-    title:"视频库",
-    users:JSON.stringify(users)
+    title: "视频库",
+    users: JSON.stringify(users)
   });
 };
 
@@ -23,8 +77,8 @@ exports.detail = function* () {
   const detail = yield this.service.video.find(id);
   console.log(detail);
   console.log(99999);
-  yield this.render('video-detail.html',{
-    title:"视频库",
+  yield this.render('video-detail.html', {
+    title: "视频库",
     detail: detail[0]
   });
 };
@@ -32,10 +86,10 @@ exports.detail = function* () {
 
 // 新增
 
-exports.main = function *(){
+exports.main = function* () {
 
   const body = this.request.body;
-  const oper = body.oper; 
+  const oper = body.oper;
   const id = body.id;
   const work_id = this.session.user.id;
   const name = body.name;
@@ -55,7 +109,7 @@ exports.main = function *(){
 
   // work_id 从session里获取
 
-  if(oper === 'add'){
+  if (oper === 'add') {
 
     yield this.service.video.insert({
       work_id,
@@ -76,14 +130,14 @@ exports.main = function *(){
 
     yield this.service.workerLog.insert({
       event: '上传视频' + name,
-      place:'视频库',
+      place: '视频库',
       work_id
     });
-    
-    this.body = 'success';
-    
 
-  }else if(oper === 'edit'){
+    this.body = 'success';
+
+
+  } else if (oper === 'edit') {
 
     yield this.service.video.update({
       id,
@@ -104,18 +158,18 @@ exports.main = function *(){
     });
 
     yield this.service.workerLog.insert({
-      event: '修改视频'+name,
-      place:'视频库',
+      event: '修改视频' + name,
+      place: '视频库',
       work_id
     });
 
     this.body = 'success';
 
-  }else if(oper === 'del'){
+  } else if (oper === 'del') {
 
     yield this.service.workerLog.insert({
-      event: '删除视频'+ id,
-      place:'视频库',
+      event: '删除视频' + id,
+      place: '视频库',
       work_id
     });
 
@@ -134,10 +188,10 @@ exports.list = function* () {
   const sql = this.query.sql;
   let result, total;
 
-  if(_search !== 'true'){
+  if (_search !== 'true') {
     result = yield this.service.video.list(pageNum, pageSize);
     total = yield this.service.video.count('1=1');
-  }else{
+  } else {
     result = yield this.service.video.search(pageNum, pageSize, sql);
     total = yield this.service.video.count(sql);
   }
@@ -150,7 +204,7 @@ exports.list = function* () {
   };
 }
 
-exports.listByCategory = function *(){
+exports.listByCategory = function* () {
   const pageNum = +this.query.page || 1;
   const pageSize = +this.query.rows || 100;
   const category_id = this.query.category_id;
@@ -165,13 +219,13 @@ exports.listByCategory = function *(){
     rows: result,
     pageNum,
     pageSize
-  }; 
+  };
 }
 
-exports.listByHot = function *(){
+exports.listByHot = function* () {
   const pageSize = +this.query.rows || 100;
   let result = yield this.service.video.listByHot(pageSize);
   this.body = {
     rows: result,
-  }; 
+  };
 }

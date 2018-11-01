@@ -21,7 +21,10 @@ module.exports = app => {
       const articles = yield app.mysql.query('select * from video_key_unit order by timestamp desc limit ? offset ?;', [ pageSize, (pageNum - 1) * pageSize ]);
       return articles;
     }
-
+    * listByKeyid(pageNum, pageSize, key_id) {
+      const articles = yield app.mysql.query('select * from video_key_unit where key_id = ? order by timestamp desc limit ? offset ?;', [ key_id, pageSize, (pageNum - 1) * pageSize ]);
+      return articles;
+    }
     // 获取某条信息
     * find(id) {
       const article = yield app.mysql.get('video_key_unit', { id });

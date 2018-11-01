@@ -76,9 +76,16 @@ exports.main = function* () {
 exports.list = function* () {
     const pageNum = +this.query.pageNumber || 1;
     const pageSize = +this.query.pageSize || 100;
+    const key_id = this.query.key_id;
     let result, total;
-    result = yield this.service.keyUnit.list(pageNum, pageSize);
-    total = yield this.service.keyUnit.count('1=1');
+    if(key_id && key_id !== '0'){
+        result = yield this.service.keyUnit.listByKeyid(pageNum, pageSize, key_id);
+        total = yield this.service.keyUnit.count('key_id='+key_id);
+    }else{
+        result = yield this.service.keyUnit.list(pageNum, pageSize);
+        total = yield this.service.keyUnit.count('1=1');
+    }
+    
 
     this.body = {
         pageNumber: pageNum,

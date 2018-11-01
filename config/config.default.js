@@ -15,6 +15,14 @@ exports.security = {
     csrf: false
 }
 
+exports.multipart = {
+    // will append to whilelist
+    fileExtensions: [
+      '.xls',
+      '.xlsx',
+    ],
+  };
+
 exports.alipay = {
     //↓↓↓↓↓↓↓↓↓↓请在这里配置您的基本信息↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
     // 合作身份者ID，以2088开头由16位纯数字组成的字符串
