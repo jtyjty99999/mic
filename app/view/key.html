@@ -117,12 +117,17 @@ ul.ztree {
     text-align: right;
     padding-right: 10px;
 }
+.form-group input{width:400px}
 
 #keyunit-box{
 
     height: 882px;
     position: relative;
 
+}
+
+.delete-active{
+    border: 1px dotted red;
 }
 
 #keyunit-box #page3{
@@ -165,6 +170,39 @@ ul.ztree {
                         <a href="#modal-form" role="button" data-toggle="modal" class="btn btn-success" id="addKeyUnit">上传</a>
                         <button class="btn btn-danger" id="removeKeyUnit">删除</button>
                     </div>
+
+                    <div id="modal-detail" class="modal" tabindex="-1">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="blue bigger">颗粒度详情</h4>
+                                    </div>
+    
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <div class="col-xs-6 col-sm-6">
+                                                    <img id="unit-url" src="111"
+                                    width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
+                                            </div>
+                                            <div class="col-xs-6 col-sm-6">
+                                                <p>编号：<span id="unit-id"></span></p>
+                                                <p>名称：<span id="unit-name"></span></p>
+                                                <p>价格：<span id="unit-price"></span></p>
+                                                <p>介绍：<span id="unit-desc"></span></p>
+                                            </div>
+                                        </div>
+                                    </div>
+    
+                                    <div class="modal-footer">
+                                        <button class="btn btn-sm" data-dismiss="modal">
+                                            <i class="ace-icon fa fa-times"></i>
+                                            关闭
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!-- PAGE CONTENT ENDS -->
 
 
                     <div id="modal-form" class="modal" tabindex="-1">
@@ -250,6 +288,7 @@ ul.ztree {
     <script src="/public/assets/js/bpage.js"></script>
 
     <script>
+
         var setting = {
             view: {
                 selectedMulti: false
@@ -451,6 +490,23 @@ ul.ztree {
 
         var key_id;
 
+        $(document).delegate('.keyunit', 'click', function(d){
+            console.log(111111);
+            $(this).toggleClass('delete-active');
+            
+
+
+            $('#unit-id').text($(this).attr('data-id'));
+            $('#unit-name').text($(this).attr('data-name'));
+            $('#unit-price').text($(this).attr('data-price'));
+            $('#unit-desc').text($(this).attr('data-desc'));
+            $('#unit-url').attr('src', $(this).attr('data-url'));
+
+
+            $('#modal-detail').modal('show');
+        });
+
+
         $('#page3').bPage({
                 url: '/keyunit',
                 //开启异步处理模式
@@ -464,8 +520,8 @@ ul.ztree {
                 render: function (data) {
                     let html = '';
                     data.list.forEach(function(d){
-                            html += `<div class="col-xs-6 col-sm-3 placeholder">
-                                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=="
+                            html += `<div class="col-sm-3 placeholder keyunit" data-url="${d.url}" data-id="${d.id}" data-url="${d.url}" data-desc="${d.description}" data-price="${d.price}">
+                                <img src="${d.url}"
                                     width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
                                 <h4>价格：${d.price}</h4>
                                 <span class="text-muted">${d.name}</span>
@@ -491,6 +547,7 @@ ul.ztree {
         $('#uploadKeyUnit').click(function(){
             if(!key_id){
                 alert('请先选择一个颗粒度');
+                return
             }
             $.ajax({
                 type: "POST",
@@ -509,6 +566,34 @@ ul.ztree {
                 }
             });   
         })
+
+        $('#removeKeyUnit').click(function(){
+            let actives = $('.delete-active');
+            if(actives.length===0){
+                alert('请点击选择要删除的颗粒');
+                return
+            }
+            let ids = [];
+            $('.delete-active').each(function(){ ids.push($(this).attr('data-id')) });            
+            $.ajax({
+                type: "POST",
+                url: "/keyunit",
+                data: {
+                    oper:'del',
+                    ids
+                },
+                success: function (data) {
+                    alert('删除成功!');
+                    location.reload();
+                }
+            });   
+        });
+
+
+
+        // 颗粒度导航
+        // 点击预览
+        // 点击删除
 
     </script>
 

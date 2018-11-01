@@ -3,6 +3,7 @@
 module.exports = app => {
   class MonthServer extends app.Service {
     * insert(obj) {
+      console.log(obj);
       const result = yield app.mysql.insert('video_video', {
         work_id:obj.work_id,
         name:obj.name,

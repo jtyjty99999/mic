@@ -65,8 +65,11 @@ exports.main = function* () {
             work_id
           });
 
-        yield this.service.keyUnit.remove(id);
-
+        let ids = this.request.body.ids;
+        for(let i = 0, l = ids.length; i< l; i++){
+            yield this.service.keyUnit.remove(ids[i]);
+        }
+        
         this.body = 'success';
     }
 

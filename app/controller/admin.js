@@ -140,8 +140,6 @@ exports.login = function* () {
     } else {
       this.session.user.position = '员工'
     }
-    console.log(99999);
-    console.log(this.session.user);
     this.redirect('/manager/index');
   } else {
     yield this.render('login.html', {

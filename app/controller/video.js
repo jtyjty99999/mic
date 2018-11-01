@@ -4,6 +4,8 @@ const moment = require('moment');
 const path = require('path');
 const fs = require('fs');
 
+const xlsx = require('node-xlsx');
+
 function saveStream(stream, filepath) {
   return new Promise((resolve, reject) => {
     const ws = fs.createWriteStream(filepath);
@@ -18,31 +20,39 @@ exports.upload = function* () {
   const stream = yield this.getFileStream();
   const filepath = path.join(this.app.config.logger.dir, 'multipart-test-file.xlsx');
   yield saveStream(stream, filepath);
+  const work_id = this.session.user.id;
   const self = this;
-  console.log(stream.filename);
-  console.log(fs.readFileSync(filepath));
+  const workSheetsFromBuffer = xlsx.parse(fs.readFileSync(filepath));
+  console.log(JSON.stringify(workSheetsFromBuffer));
+  let rows = workSheetsFromBuffer[0].data;
+  rows.shift();
 
-  // 解析excel
+  let categorys = yield this.service.category.list();
+  categorys = categorys.filter((d) => { return d.level === 1 });
 
-  // 批量添加
-  /*
-  yield this.service.video.insert({
-    work_id,
-    name,
-    description,
-    category_id,
-    price,
-    business,
-    time,
-    format,
-    url,
-    is_audio,
-    is_model,
-    is_scene,
-    is_show,
-    is_text
-  });*/
-  this.body = 111;
+  for(let i = 0, l = rows.length;i< l; i++){
+    let d = rows[i];
+    yield self.service.video.insert({
+      work_id,
+      name:d[0],
+      description:d[1],
+      category_id:categorys.filter((category)=>{
+        return category.name === d[2]
+      })[0].id || 16,
+      price:d[3],
+      business:d[4],
+      time:d[5],
+      format:d[6],
+      url:d[7],
+      is_audio:d[8],
+      is_model:d[9],
+      is_scene:d[10],
+      is_show:d[11],
+      is_text:d[12]
+    });
+  }
+
+  this.body = 'success';
   return
 
   const plus = 'http://pic-cloud-hn.b0.upaiyun.com/';

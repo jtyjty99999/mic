@@ -47,6 +47,7 @@
                                         <div class="row">
                                             <div class="col-xs-12 col-sm-12">
                                                 <form action="">
+                                                        <a href="/public/assets/tpl.xlsx">点击下载excel模板</a>
                                                         <div class="form-group">
                                                                 <label for="form-field-url">excel文件</label>
                                 
@@ -110,6 +111,11 @@
             processData: false, // NEEDED, DON'T OMIT THIS
             success: function(result) {
                 console.log(result);
+                if(result === 'success'){
+                    alert('批量上传成功!');
+                    $('#modal-form').modal('hide');
+                    location.reload()
+                }
                 //location.href = result.url;
             },
             error: function(responseStr) {
