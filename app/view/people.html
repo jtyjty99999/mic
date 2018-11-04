@@ -183,6 +183,10 @@
             return linkHtml;
         }
 
+        function linkUnFormat( cellvalue, options, cell){  
+            return $('a', cell).text();  
+        }  
+
     $(grid_selector).jqGrid({
         //direction: "rtl",
         //data: grid_data,
@@ -201,7 +205,7 @@
         colModel: [
             { name: 'id', index: 'id', width: 60, sorttype: "int", editable: false },
             { name: 'name', index: 'name', width: 150,hidden:true, editable: true, editoptions: { size: "20", maxlength: "40" } },
-            { name: 'cname', index: 'cname', width: 150, editable: true, formatter: formatLink, editoptions: { size: "20", maxlength: "40" } },
+            { name: 'cname', index: 'cname', width: 150, editable: true, formatter: formatLink, unformat:linkUnFormat, editoptions: { size: "20", maxlength: "40" } },
             { name: 'phone', index: 'phone', width: 70, editable: true, editoptions: { size: "20", maxlength: "30" } },
             { name: 'password', index: 'password', width: 150,hidden:true, editable: true, editoptions: { size: "20", maxlength: "40" } },
             { name: 'auth', index: 'auth', width: 60,hidden:true, editable: true, formatter: formatAuth, edittype: "select", editoptions: { value: "0:管理员;1:员工" } },

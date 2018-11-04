@@ -353,7 +353,7 @@
         colModel: [
             { name: 'id', index: 'id', width: 60, sorttype: "int", editable: false},
             { name: 'url', index: 'url', hidden: true, width: 150, editable: true, editoptions: { size: "20", maxlength: "200" } },
-            { name: 'name', index: 'name', width: 150, editable: true, formatter: formatLink, editoptions: { size: "20", maxlength: "100" } },
+            { name: 'name', index: 'name', width: 150, editable: true, formatter: "showlink", formatoptions:{baseLinkUrl:"/manager/video/detail",idName: "id"}, editoptions: { size: "20", maxlength: "100" } },
             { name: 'description', index: 'description', width: 150, editable: true, editoptions: { size: "20", maxlength: "100" } },
             { name: 'category_id', index: 'category_id', formatter: formatCategory, width: 70, editable: true, edittype: "select", editoptions: { value: categoryValue } },
             { name: 'price', index: 'price', width: 150, editable: true, editoptions: { size: "20", maxlength: "20" } },
