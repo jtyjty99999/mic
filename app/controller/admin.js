@@ -1,5 +1,6 @@
 'use strict';
 
+const moment = require('moment');
 
 exports.loginByWechat = function* () {
 
@@ -25,7 +26,13 @@ const loginRule = {
 
 
 exports.index = function* () {
-  const work_id = this.session.user.id;
+  const work_id = this.query.userid? this.query.userid :this.session.user.id;
+  let user = yield this.service.people.find(work_id);
+  console.log(9999);
+  console.log(user,work_id);
+  if(this.session.user.auth === 0){
+      //非管理员不能查看
+  }
   yield this.render('index.html', {
     current: "people",
     key: yield this.service.keyUnit.count({
@@ -40,7 +47,8 @@ exports.index = function* () {
     bill: yield this.service.bill.count({
       work_id
     }),
-    title: "员工信息"
+    title: "员工信息",
+    user
   });
 
 };
@@ -49,11 +57,15 @@ exports.index = function* () {
 exports.list = function* () {
   const pageNum = +this.query.pageNumber || 1;
   const pageSize = +this.query.pageSize || 100;
-  const work_id = this.session.user.id;
-
+  const work_id = this.query.userid? this.query.userid :this.session.user.id;
   let result, total;
   result = yield this.service.workerLog.listByUser(pageNum, pageSize, work_id);
-  total = yield this.service.workerLog.count();
+  total = yield this.service.workerLog.count({work_id});
+
+  result = result.map((d)=>{
+    d.time = moment(d.time).format('YYYY-MM-DD hh:mm:ss');
+    return d;
+  });
 
   this.body = {
     pageNumber: pageNum,
@@ -62,53 +74,6 @@ exports.list = function* () {
     totalPage: total > pageSize ? total % pageSize : 1,
     list: result
   };
-  /*
-  this.body = {
-      "pageSize": 10,
-      "pageNumber": 1,
-      "totalRow": 11,
-      "totalPage": 2,
-      "list": [
-          {
-              "expert": "计算机网络",
-              "birthday": "2014-11-12",
-              "sex": 1,
-              "status": 1,
-              "remark": "asdfasdfsdf",
-              "sexName": "男",
-              "statusName": "启用",
-              "phone2": "13777777777",
-              "password": "e10adc3949ba59abbe56e057f20f883e",
-              "phone1": "13655555555",
-              "id": 1,
-              "update_time": "2014-11-24 15:50:22",
-              "email": "aaa@aa.com",
-              "login_name": "zhangsan",
-              "name": "张三",
-              "create_time": "2014-09-08 16:22:01",
-              "qq": "44444444"
-          },
-          {
-              "expert": "计算机网络1",
-              "birthday": "2014-11-03",
-              "sex": 0,
-              "status": 1,
-              "remark": "124312431",
-              "sexName": "女",
-              "statusName": "启用",
-              "phone2": "1234123421",
-              "password": "",
-              "phone1": "1241342341431",
-              "id": 5620,
-              "update_time": "2014-11-24 13:37:58",
-              "email": "341431@aa.comn",
-              "login_name": "lisi",
-              "name": "李四",
-              "create_time": "2014-09-08 22:24:05",
-              "qq": "34124121"
-          }
-      ]
-  }*/
 }
 
 

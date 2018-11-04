@@ -50,6 +50,11 @@ exports.upload = function* () {
       is_show:d[11],
       is_text:d[12]
     });
+    yield this.service.workerLog.insert({
+      event: '上传视频' + d[0],
+      place: '视频库',
+      work_id
+    });
   }
 
   this.body = 'success';
@@ -85,8 +90,7 @@ exports.detail = function* () {
 
   const id = this.request.query.id;
   const detail = yield this.service.video.find(id);
-  console.log(detail);
-  console.log(99999);
+  detail[0].timestamp = moment(detail[0].timestamp).format('YYYY-MM-DD hh:mm:ss')
   yield this.render('video-detail.html', {
     title: "视频库",
     detail: detail[0]

@@ -9,7 +9,8 @@ exports.index = function* () {
 
   yield this.render('people.html',{
     current:"people",
-    title:"人员管理"
+    title:"人员管理",
+    user:this.session.user
   });
 
 };
@@ -102,6 +103,7 @@ exports.list = function* () {
   function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms))
   }
+
   this.body = {
     total: total > pageSize ? (parseInt(total / pageSize) + 1) : 1,
     rows: result

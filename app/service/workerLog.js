@@ -33,7 +33,7 @@ module.exports = app => {
 
         // 总数
         * count(where) {
-            const count = yield app.mysql.query('select count(*) from video_worker_log', [where]);
+            const count = yield app.mysql.query('select count(*) from video_worker_log where ?', [where]);
 
             return count[0]['count(*)'];
         }

@@ -11,7 +11,7 @@
 {% block body %}
 <!-- Main Content -->
 
-<div class="main-content">
+<div class="main-content"  auth = "{{user.auth}}" id="main">
     <div class="main-content-inner">
 
         <div class="page-content">
@@ -172,6 +172,17 @@
     function formatAuth(cellValue, options, rowObject) {
         return ['管理员', '员工'][cellValue]
     };
+    window.auth = $('#main').attr('auth');
+    function formatLink(cellValue, options, rowObject) {
+        let linkHtml
+        if(window.auth === 0){
+             linkHtml = cellValue;
+        }else{
+             linkHtml = "<a href='/manager/index?userid="+ rowObject.id+"'>"+ cellValue+"</a>";
+        }
+            return linkHtml;
+        }
+
     $(grid_selector).jqGrid({
         //direction: "rtl",
         //data: grid_data,
@@ -190,7 +201,7 @@
         colModel: [
             { name: 'id', index: 'id', width: 60, sorttype: "int", editable: false },
             { name: 'name', index: 'name', width: 150,hidden:true, editable: true, editoptions: { size: "20", maxlength: "40" } },
-            { name: 'cname', index: 'cname', width: 150, editable: true, editoptions: { size: "20", maxlength: "40" } },
+            { name: 'cname', index: 'cname', width: 150, editable: true, formatter: formatLink, editoptions: { size: "20", maxlength: "40" } },
             { name: 'phone', index: 'phone', width: 70, editable: true, editoptions: { size: "20", maxlength: "30" } },
             { name: 'password', index: 'password', width: 150,hidden:true, editable: true, editoptions: { size: "20", maxlength: "40" } },
             { name: 'auth', index: 'auth', width: 60,hidden:true, editable: true, formatter: formatAuth, edittype: "select", editoptions: { value: "0:管理员;1:员工" } },

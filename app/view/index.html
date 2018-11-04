@@ -13,7 +13,8 @@
     height:120px;
     background:rgba(255,255,255,1);
     display:inline-block;
-    box-shadow:0px 6px 8px 0px rgba(49,55,68,0.1);
+    box-shadow:0px -1px 8px 1px rgba(49,55,68,0.1);
+    margin-right: 20px;
 }
 
 .activity-box .activity-number{
@@ -80,6 +81,7 @@ line-height:16px;
 font-weight:500;
 color:rgba(51,51,51,1);
 line-height:16px;
+margin-left: -12px;
 }
 .user-action th{
     background:rgba(239,244,250,1);
@@ -125,8 +127,8 @@ line-height:16px;
             
                         <div id="user-profile-1" class="user-profile row">
 										<div class="col-xs-12 col-sm-3">
-                                            <span class="username">{{ctx.session.user.name}}</span>
-                                            <span class="user-position">{{ctx.session.user.position}}</span>
+                                            <span class="username">{{user.name}}</span>
+                                            <span class="user-position">{{user.position}}</span>
 
 
 											<div class="profile-user-info profile-user-info-striped">
@@ -134,7 +136,7 @@ line-height:16px;
 													<div class="profile-info-name"> 编号： </div>
 
 													<div class="profile-info-value">
-														<span class="" id="">{{ctx.session.user.id}}</span>
+														<span class="" id="userid">{{user.id}}</span>
 													</div>
 												</div>
 
@@ -142,7 +144,7 @@ line-height:16px;
 													<div class="profile-info-name"> 电话：  </div>
 
 													<div class="profile-info-value">
-														<span class="" id="">{{ctx.session.user.phone}}</span>
+														<span class="" id="">{{user.phone}}</span>
 													</div>
 												</div>
 
@@ -150,7 +152,7 @@ line-height:16px;
 													<div class="profile-info-name">  备注： </div>
 
 													<div class="profile-info-value">
-														<span class="" id="">{{ctx.session.user.description}}</span>
+														<span class="" id="">{{user.description}}</span>
 													</div>
 												</div>
 
@@ -230,7 +232,7 @@ line-height:16px;
             //数据自定义填充
             render: function (data) {
                 console.log(data);
-                let html = '<table class="user-action"><tr><th>时间</th><th>事件</th><th>地点</th></tr>';
+                let html = '<table class="user-action"><tr><th width="300">时间</th><th>事件</th><th>地点</th></tr>';
                 data.list.forEach(function(d){
                         html += `<tr><td>${d.time}</td><td>${d.event}</td><td>${d.place}</td></tr>`
                     });
@@ -240,12 +242,11 @@ line-height:16px;
             },
             params: function () {
                 return {
-                    userName: 'zhangsan',
-                    age: 42
+                    userid :$('#userid').text()
                 };
             }
         });
-
+detail[0].timestamp = moment(detail[0].timestamp).format('YYYY-MM-DD hh:mm:ss')
         $('#uploadKeyUnit').click(function(){
             $.ajax({
                 type: "POST",
