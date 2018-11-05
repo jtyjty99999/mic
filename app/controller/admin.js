@@ -28,8 +28,7 @@ const loginRule = {
 exports.index = function* () {
   const work_id = this.query.userid? this.query.userid :this.session.user.id;
   let user = yield this.service.people.find(work_id);
-  console.log(9999);
-  console.log(user,work_id);
+
   if(this.session.user.auth === 0){
       //非管理员不能查看
   }

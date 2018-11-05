@@ -91,9 +91,11 @@ exports.detail = function* () {
   const id = this.request.query.id;
   const detail = yield this.service.video.find(id);
   detail[0].timestamp = moment(detail[0].timestamp).format('YYYY-MM-DD hh:mm:ss')
+  let user = yield this.service.people.find(detail[0]['work_id']);
   yield this.render('video-detail.html', {
     title: "视频库",
-    detail: detail[0]
+    detail: detail[0],
+    user
   });
 };
 
