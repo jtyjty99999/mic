@@ -20,11 +20,11 @@ ul.ztree {
 }
 
 .page-content {
-    padding: 0 30px;
+    padding: 0 14px;
 }
 
 .operator{
-    text-align: center;
+    text-align: left;
     margin-top: 30px;
 }
 
@@ -38,7 +38,7 @@ ul.ztree {
                 border-radius:6px;
                 border:none;
 }
-.btn.btn-danger{
+.btn.btn-danger,.btn.btn-default{
                 width:auto;
                 height:32px;
                 border-radius:6px;
@@ -120,6 +120,10 @@ ul.ztree {
 }
 .form-group input{width:400px}
 
+.keyunit input{
+    margin-left: 50%;
+    visibility: hidden
+}
 #keyunit-box{
 
     height: 882px;
@@ -170,6 +174,8 @@ ul.ztree {
                     <div class="operator">
                         <a href="#modal-form" role="button" data-toggle="modal" class="btn btn-success" id="addKeyUnit">上传</a>
                         <button class="btn btn-danger" id="removeKeyUnit">删除</button>
+                        <button class="btn btn-danger" id="confirmKeyUnit">确认</button>
+                        <button class="btn btn-default" id="cancelKeyUnit">取消</button>
                     </div>
 
                     <div id="modal-detail" class="modal" tabindex="-1">
@@ -492,19 +498,20 @@ ul.ztree {
         var key_id;
 
         $(document).delegate('.keyunit', 'click', function(d){
-            console.log(111111);
-            $(this).toggleClass('delete-active');
             
+            if(isDelete){
+                return
+                $(this).toggleClass('delete-active');
+            }else{
+                $('#unit-id').text($(this).attr('data-id'));
+                $('#unit-name').text($(this).attr('data-name'));
+                $('#unit-price').text($(this).attr('data-price'));
+                $('#unit-desc').text($(this).attr('data-desc'));
+                $('#unit-url').attr('src', $(this).attr('data-url'));
 
 
-            $('#unit-id').text($(this).attr('data-id'));
-            $('#unit-name').text($(this).attr('data-name'));
-            $('#unit-price').text($(this).attr('data-price'));
-            $('#unit-desc').text($(this).attr('data-desc'));
-            $('#unit-url').attr('src', $(this).attr('data-url'));
-
-
-            $('#modal-detail').modal('show');
+                $('#modal-detail').modal('show');
+            }
         });
 
 
@@ -522,10 +529,13 @@ ul.ztree {
                     let html = '';
                     data.list.forEach(function(d){
                             html += `<div class="col-sm-3 placeholder keyunit" data-url="${d.url}" data-id="${d.id}" data-url="${d.url}" data-desc="${d.description}" data-price="${d.price}">
+                            
+                                    <input type=checkbox  data-id="${d.id}"/>
                                 <img src="${d.url}"
                                     width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
                                 <h4>价格：${d.price}</h4>
                                 <span class="text-muted">${d.name}</span>
+                                
                             </div>`
                         });
                         $('#list').html(html)
@@ -567,15 +577,43 @@ ul.ztree {
                 }
             });   
         })
-
+            $('#confirmKeyUnit').hide();
+            $('#cancelKeyUnit').hide();
+        var isDelete = false;
         $('#removeKeyUnit').click(function(){
+            isDelete = true; 
+            $('.keyunit input').each(function(){
+                $(this).css('visibility','visible');
+            })
+            $('#confirmKeyUnit').show();
+            $('#cancelKeyUnit').show();
+            $('#removeKeyUnit').hide();
+        });
+        $('#cancelKeyUnit').click(function(){
+            
+            isDelete = false; 
+            $('#confirmKeyUnit').hide();
+            $('#cancelKeyUnit').hide();
+            $('#removeKeyUnit').show();
+            $('.keyunit input').each(function(){
+                $(this).css('visibility','hidden');
+            })
+            /*
             let actives = $('.delete-active');
+            actives.each(function(){
+                $(this).toggleClass('delete-active');
+            })*/
+        });
+        $('#confirmKeyUnit').click(function(){
+            let actives = $('.keyunit input:checked')
             if(actives.length===0){
                 alert('请点击选择要删除的颗粒');
                 return
             }
             let ids = [];
-            $('.delete-active').each(function(){ ids.push($(this).attr('data-id')) });            
+            actives.each(function(){
+                ids.push($(this).attr('data-id'));
+            });        
             $.ajax({
                 type: "POST",
                 url: "/keyunit",
@@ -586,11 +624,16 @@ ul.ztree {
                 success: function (data) {
                     alert('删除成功!');
                     location.reload();
+                    isDelete = false;
+                    $('#confirmKeyUnit').hide();
+                    $('#removeKeyUnit').show();
+                    $('#cancelKeyUnit').hide();
+                    $('.keyunit input').each(function(){
+                        $(this).css('visibility','hidden');
+                    })
                 }
             });   
         });
-
-
 
         // 颗粒度导航
         // 点击预览

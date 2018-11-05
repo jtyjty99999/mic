@@ -17,7 +17,7 @@
 video{
     height:594px;
     width: 100%;
-    background:rgba(238,238,238,1);
+    background: rgba(0,0,0,0.1);
 }
 .video-table{
     width:100%;
@@ -44,6 +44,7 @@ video{
 <div class="main-content">
     <div class="main-content-inner">
             <div class="page-content">
+                <h4 class="title">{{detail.video_name}}.{{detail.format}}</h4>
                 <video src="{{detail.url}}" autoplay controls="controls"></video>
                 <h4 class="title">视频信息：</h4>
 

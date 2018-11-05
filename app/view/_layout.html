@@ -98,7 +98,11 @@
                 line-height: 50px;
                 height: 50px;
                 display: block;
-                width:100%
+                width:100%;
+                text-decoration: none;
+            }
+            .user-name:hover{
+                text-decoration: none;
             }
             .no-skin .nav-list>li>a {
                 background-color: inherit!important;
@@ -240,7 +244,13 @@
             .ui-jqgrid-bdiv>div{
                 border:1px solid rgba(238,238,238,1)
             }
-            
+            .ace-nav>li>a>.ace-icon{
+                font-size: 26px;
+    margin-top: 10px;
+            }
+            #nav-user-name .ace-icon{ 
+                font-size: 16px;
+            }
         </style>
 
     {% block style %}{% endblock %}
@@ -262,8 +272,30 @@
             <div class="navbar-buttons navbar-header pull-right" role="navigation">
                 <ul class="nav ace-nav">
                     <li id="nav-user-name">
-                        <a href="/manager/index">{{ctx.session.user.name}}</a>
+                            <a data-toggle="dropdown" href="#" class="dropdown-toggle">
+                                    {{ctx.session.user.name}}
+                                    <i class="ace-icon fa fa-caret-down"></i>
+                                </a>
+        
+                                <ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
+                                    <li>
+                                        <a href="/manager/people">
+                                            <i class="ace-icon fa fa-cog"></i>
+                                            修改资料
+                                        </a>
+                                    </li>
+        
+                                    <li>
+                                        <a href="/manager/index">
+                                            <i class="ace-icon fa fa-user"></i>
+                                            个人信息
+                                        </a>
+                                    </li>
+                                    
+                                </ul>
                     </li>
+                    
+
                     <li class="dropdown-modal">
                         <a class="dropdown-toggle" href="#login-form2" role="button" data-toggle="modal">
                             <i class="ace-icon fa fa-sign-out"></i>
