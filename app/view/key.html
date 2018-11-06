@@ -192,6 +192,7 @@ ul.ztree {
                                             <div class="col-xs-6 col-sm-6">
                                                     <img id="unit-url" src="111"
                                     width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
+                                    <video id="unit-url-video" src="111" autoplay width="200" height="200" controls="controls"></video>
                                             </div>
                                             <div class="col-xs-6 col-sm-6">
                                                 <p>编号：<span id="unit-id"></span></p>
@@ -225,10 +226,10 @@ ul.ztree {
                                     <div class="row">
                                         <div class="col-xs-12 col-sm-12">
                                             <div class="form-group">
-                                                <label for="form-field-url">文件路径</label>
+                                                <label for="form-field-url">文件链接</label>
 
                                                 <div>
-                                                    <input type="text" id="form-field-url" placeholder="文件路径" value="" />
+                                                    <input type="text" id="form-field-url" placeholder="文件链接" value="" />
                                                     
                                                 </div>
                                             </div>
@@ -508,9 +509,14 @@ ul.ztree {
                 $('#unit-name').text($(this).attr('data-name'));
                 $('#unit-price').text($(this).attr('data-price'));
                 $('#unit-desc').text($(this).attr('data-desc'));
-                $('#unit-url').attr('src', $(this).attr('data-url'));
-
-
+                if($(this).attr('data-type')==='pic'){
+                    $('#unit-url').show().attr('src', $(this).attr('data-url'));
+                    $('#unit-url-video').hide()
+                }else{
+                    $('#unit-url-video').show().attr('src', $(this).attr('data-url'));
+                    $('#unit-url').hide()
+                }
+            
                 $('#modal-detail').modal('show');
             }
         });
@@ -529,15 +535,27 @@ ul.ztree {
                 render: function (data) {
                     let html = '';
                     data.list.forEach(function(d){
-                            html += `<div class="col-sm-3 placeholder keyunit" data-url="${d.url}" data-id="${d.id}" data-url="${d.url}" data-desc="${d.description}" data-price="${d.price}">
                             
-                                    <input type=checkbox  data-id="${d.id}"/>
-                                <img src="${d.url}"
-                                    width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
-                                <h4>价格：${d.price}</h4>
-                                <span class="text-muted">${d.name}</span>
-                                
-                            </div>`
+
+                    if(d.url.toLowerCase().indexOf('png') !==-1 || d.url.toLowerCase().indexOf('jpg') !==-1 || d.url.toLowerCase().indexOf('jpeg') !==-1){
+                        html += `<div class="col-sm-3 placeholder keyunit" data-type="pic" data-url="${d.url}" data-id="${d.id}" data-url="${d.url}" data-desc="${d.description}" data-price="${d.price}">
+                            
+                            <input type=checkbox  data-id="${d.id}"/>
+                        <img src="${d.url}"
+                            width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
+                        <h4>价格：${d.price}</h4>
+                        <span class="text-muted">${d.name}</span>
+                        
+                    </div>`
+                    }else{
+                        html += `<div class="col-sm-3 placeholder keyunit" data-type="video" data-url="${d.url}" data-id="${d.id}" data-url="${d.url}" data-desc="${d.description}" data-price="${d.price}">
+                            <input type=checkbox  data-id="${d.id}"/>
+                        <video src="${d.url}" width="200" height="200" controls="controls" >
+                        <h4>价格：${d.price}</h4>
+                        <span class="text-muted">${d.name}</span>
+                        
+                        </div>`
+                    }
                         });
                         $('#list').html(html)
                 },
