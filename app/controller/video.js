@@ -91,12 +91,27 @@ exports.detail = function* () {
   const id = this.request.query.id;
   const detail = yield this.service.video.find(id);
   detail[0].timestamp = moment(detail[0].timestamp).format('YYYY-MM-DD hh:mm:ss')
+  if(detail[0].url.indexOf('embed')!==-1){
+    detail[0].isqq = 1
+  }else{
+    detail[0].isqq = 0
+  }
   let user = yield this.service.people.find(detail[0]['work_id']);
   yield this.render('video-detail.html', {
     title: "视频库",
     detail: detail[0],
     user
   });
+};
+
+exports.getDetail = function* () {
+
+  const id = this.request.query.id;
+  const detail = yield this.service.video.find(id);
+  this.body = {
+    "success":true,
+    detail
+  }
 };
 
 

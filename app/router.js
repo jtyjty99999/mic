@@ -20,10 +20,12 @@ module.exports = app => {
   
   //视频库
   app.get('/manager/video/detail', admin, app.controller.video.detail);
+  
   app.post('/video', admin, app.controller.video.main);
   app.get('/video', admin, app.controller.video.list);
   app.get('/video/listByCategory', app.controller.video.listByCategory);
   app.get('/video/listByHot', app.controller.video.listByHot);
+  app.get('/video/detail', app.controller.video.getDetail);
   app.get('/manager/video', admin, app.controller.video.index);
 
   //人员管理
@@ -60,6 +62,10 @@ module.exports = app => {
 
   app.post('/api/login', app.controller.admin.loginByWechat)
 
+  // 微信api日志
+
+  app.post('/api/log', app.controller.log.log)
+  app.get('/api/log/listByUser', app.controller.log.listByUser)
 
   //app.get('/manager', admin, app.controller.admin.manager);
 

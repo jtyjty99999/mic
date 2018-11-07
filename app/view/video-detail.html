@@ -14,7 +14,7 @@
     color:rgba(51,51,51,1);
     line-height:16px;
 }
-video{
+video, embed{
     height:594px;
     width: 100%;
     background: rgba(0,0,0,0.1);
@@ -45,7 +45,8 @@ video{
     <div class="main-content-inner">
             <div class="page-content">
                 <h4 class="title">{{detail.video_name}}.{{detail.format}}</h4>
-                <video src="{{detail.url}}" autoplay controls="controls"></video>
+                {% if detail.isqq === 1 %} {{detail.url | safe}} {% endif %}
+                {% if detail.isqq === 0 %} <video src="{{detail.url}}" autoplay controls="controls"></video> {% endif %}
                 <h4 class="title">视频信息：</h4>
 
                 <table class="video-table">
