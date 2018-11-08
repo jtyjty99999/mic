@@ -29,7 +29,7 @@ module.exports = app => {
 
         // 获取某人列表
         * listByUser(pageNum, pageSize, work_id) {
-            const articles = yield app.mysql.query('select video_id, datetime ,video_video.name,video_video.price from video_user_fav LEFT JOIN video_video on video_video.id = video_user_fav.video_id where user_id = ? order by datetime desc limit ? offset ?;', [work_id, pageSize, (pageNum - 1) * pageSize] );
+            const articles = yield app.mysql.query('select video_id, datetime ,video_video.name,video_video.price,video_video.url from video_user_fav LEFT JOIN video_video on video_video.id = video_user_fav.video_id where user_id = ? order by datetime desc limit ? offset ?;', [work_id, pageSize, (pageNum - 1) * pageSize] );
             return articles;
         }
         // 获取某条信息
@@ -60,6 +60,12 @@ module.exports = app => {
             });
 
             return result.affectedRows === 1;
+        }
+
+        * deleteFromUser(ids, openid){
+            const result = yield app.mysql.query('delete from video_user_fav where video_id in(' + ids + ') and user_id = ?', [openid]);
+
+            return result
         }
 
     }

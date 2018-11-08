@@ -27,3 +27,14 @@ exports.listByUser = function* () {
         rows: result
     };
 }
+
+exports.deleteFav = function *(){
+    let result;
+    const openid = this.query.openid;
+    const ids = this.request.body.ids;
+    console.log(ids);
+    result = yield this.service.fav.deleteFromUser(ids, openid);
+    this.body = {
+        result
+    };
+}

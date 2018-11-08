@@ -66,10 +66,12 @@ module.exports = app => {
 
   app.post('/api/log', app.controller.log.log)
   app.get('/api/log/listByUser', app.controller.log.listByUser)
+  app.post('/api/log/deleteLog', app.controller.log.deleteLog)
 
     // 微信api收藏
     app.post('/api/fav', app.controller.fav.fav)
     app.get('/api/fav/listByUser', app.controller.fav.listByUser)
+    app.post('/api/fav/deleteFav', app.controller.fav.deleteFav)
 
   //app.get('/manager', admin, app.controller.admin.manager);
 
