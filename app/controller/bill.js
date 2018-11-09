@@ -3,6 +3,7 @@
 const moment = require('moment');
 const marked = require('marked');
 const counter = require('../lib/count');
+const mail = require('../lib/mail');
 
 
 exports.index = function* () {
@@ -37,9 +38,10 @@ exports.main = function *(){
   const phone = body.phone;
   const category_id = body.category_id;
   const openid = body.openid;
+  let result;
   if(oper === 'add'){
 
-    yield this.service.bill.insert({
+    result = yield this.service.bill.insert({
       work_id:this.session.user? this.session.user.id : null,
       name,
       price,
@@ -54,6 +56,12 @@ exports.main = function *(){
       category_id,
       openid
     });
+
+    if(!this.session.user){
+      mail.sendMail('你收到一份来自全民星小视频的brief', '请在后台查看id为' + result.insertId +'的订单',function(info){
+        console.log(info);
+      })
+    }
 
     this.body = 'success';
 

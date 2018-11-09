@@ -25,6 +25,7 @@ module.exports = app => {
   app.get('/video', admin, app.controller.video.list);
   app.get('/video/listByCategory', app.controller.video.listByCategory);
   app.get('/video/listByHot', app.controller.video.listByHot);
+  app.get('/video/searchByKeyword', app.controller.video.searchByKeyword);
   app.get('/video/detail', app.controller.video.getDetail);
   app.get('/manager/video', admin, app.controller.video.index);
 
@@ -72,6 +73,15 @@ module.exports = app => {
     app.post('/api/fav', app.controller.fav.fav)
     app.get('/api/fav/listByUser', app.controller.fav.listByUser)
     app.post('/api/fav/deleteFav', app.controller.fav.deleteFav)
+
+  // 微信api搜索词
+
+  app.post('/api/keyword', app.controller.keyword.add)
+  app.get('/api/keyword/listByUser', app.controller.keyword.listByUser)
+  app.post('/api/keyword/deleteKeyword', app.controller.keyword.deleteKeyword)
+
+
+  app.get('/api/sendMail',app.controller.mail.sendMail)
 
   //app.get('/manager', admin, app.controller.admin.manager);
 

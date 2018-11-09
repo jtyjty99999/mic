@@ -21,7 +21,7 @@ module.exports = app => {
         timestamp: app.mysql.literals.now,
       });
 
-      return result.affectedRows === 1;
+      return result;
     }
 
     // 获取列表

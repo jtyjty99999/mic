@@ -51,6 +51,15 @@ module.exports = app => {
         const articles = yield app.mysql.query(sql, [pageSize, (pageNum - 1) * pageSize ]);
         return articles;
     }
+
+
+    // 搜索
+    * searchByKeyword(pageNum, pageSize, keyword) {
+      let sql = `select id,name,url,price from video_video where name like '%` +keyword +`%' order by timestamp desc limit ? offset ?;`; 
+      const articles = yield app.mysql.query(sql, [pageSize, (pageNum - 1) * pageSize ]);
+      return articles;
+    }
+
     // 总数
     * count(where) {
         const count = yield app.mysql.query('select count(*) from video_video where ?', [where]);

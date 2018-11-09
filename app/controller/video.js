@@ -254,9 +254,20 @@ exports.listByCategory = function* () {
 }
 
 exports.listByHot = function* () {
+  const pageNum = +this.query.page || 1;
   const pageSize = +this.query.rows || 100;
   let result = yield this.service.video.listByHot(pageSize);
   this.body = {
     rows: result,
   };
+}
+
+exports.searchByKeyword = function *(){
+  const pageNum = +this.query.page || 1;
+  const pageSize = +this.query.rows || 100;
+  const keyword = this.query.keyword
+  let result = yield this.service.video.searchByKeyword(pageNum, pageSize, keyword);
+  this.body = {
+    rows: result,
+  }; 
 }
