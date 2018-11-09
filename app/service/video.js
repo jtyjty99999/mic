@@ -43,6 +43,11 @@ module.exports = app => {
       return articles;
     }
 
+    * listByRecommand(pageSize){
+      const articles = yield app.mysql.query('select * from video_recommand LEFT JOIN video_video  on video_recommand.video_id=video_video.id limit ?;', [ pageSize ]);
+      return articles;
+    }
+    
     // 搜索
     * search(pageNum, pageSize, where) {
         let sql = 'select * from video_video where deleted = 0 and'

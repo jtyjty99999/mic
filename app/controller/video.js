@@ -261,6 +261,14 @@ exports.listByHot = function* () {
     rows: result,
   };
 }
+exports.listByRecommand = function* () {
+  const pageNum = +this.query.page || 1;
+  const pageSize = +this.query.rows || 100;
+  let result = yield this.service.video.listByRecommand(pageSize);
+  this.body = {
+    rows: result,
+  };
+}
 
 exports.searchByKeyword = function *(){
   const pageNum = +this.query.page || 1;
