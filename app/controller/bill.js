@@ -123,6 +123,10 @@ exports.list = function* () {
     result = yield this.service.bill.search(pageNum, pageSize, sql);
     total = yield this.service.bill.count(sql);
   }
+  result = result.map((d)=>{
+    d.time = moment(d.time).format('YYYY-MM-DD hh:mm:ss');
+    return d;
+  });
   function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms))
   }
