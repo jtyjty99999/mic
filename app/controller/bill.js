@@ -123,10 +123,6 @@ exports.list = function* () {
     result = yield this.service.bill.search(pageNum, pageSize, sql);
     total = yield this.service.bill.count(sql);
   }
-  result = result.map((d)=>{
-    d.timestamp = moment(d.timestamp).format('YYYY-MM-DD hh:mm:ss');
-    return d;
-  });
   function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms))
   }
@@ -140,6 +136,10 @@ exports.listByUser = function* () {
   let result;
   const openid = this.query.openid;
   result = yield this.service.bill.listByUser(openid);
+  result = result.map((d)=>{
+    d.timestamp = moment(d.timestamp).format('YYYY-MM-DD hh:mm:ss');
+    return d;
+  });
   this.body = {
     rows: result
   };
