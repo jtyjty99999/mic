@@ -213,7 +213,7 @@ window.users = JSON.parse($('#users').val());
                     //delbutton: false,//disable delete button
                     delformbutton: true,
                     delOptions: { recreateForm: true, beforeShowForm: beforeDeleteCallback },
-                    editformbutton: true, editOptions: { recreateForm: true, beforeShowForm: beforeEditCallback }
+                    editformbutton: true, editOptions: { recreateForm: true, beforeShowForm: beforeEditCallback,closeAfterEdit:true }
                 }
             },
         ],
@@ -278,7 +278,7 @@ window.users = JSON.parse($('#users').val());
         },
         {
             //edit record form
-            //closeAfterEdit: true,
+            closeAfterEdit: true,
             //width: 700,
             recreateForm: true,
             beforeShowForm: function (e) {
