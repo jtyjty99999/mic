@@ -216,10 +216,10 @@
         console.log(editOptions);
         var div = $("<div style='margin-bottom:5px;margin-top:-10px;'></div>");
         var label = $("<label class='radio-inline'></label>");
-        var radio = $("<input>", { type: "radio", value: "0", name: editOptions.name, id: editOptions.id, checked: value != 1 });
+        var radio = $("<input>", { type: "radio", value: "1", name: editOptions.name, id: editOptions.id, checked: value != 1 });
         label.append(radio).append("有");
         var label1 = $("<label class='radio-inline'></label>");
-        var radio1 = $("<input>", { type: "radio", value: "1", name: editOptions.name, id: editOptions.id, checked: value == 1 });
+        var radio1 = $("<input>", { type: "radio", value: "0", name: editOptions.name, id: editOptions.id, checked: value == 1 });
         label1.append(radio1).append("无");
         div.append(label).append(label1);
 
