@@ -81,6 +81,8 @@ module.exports = app => {
   app.get('/api/keyword/listByUser', app.controller.keyword.listByUser)
   app.post('/api/keyword/deleteKeyword', app.controller.keyword.deleteKeyword)
 
+  app.get('/api/user', app.controller.user.find)
+  app.post('/api/user/save', app.controller.user.save)
 
   app.get('/api/sendMail',app.controller.mail.sendMail)
 
