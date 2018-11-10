@@ -14,8 +14,8 @@ exports.sendMail = function(title, text, cb){
     
     const mailOptions = {
         from: 'qmx_alert@163.com ', // sender address
-        to: 'jtyjty99999@126.com', // list of receivers
-        //to:'bd@qmxpower.com',
+        //to: 'jtyjty99999@126.com', // list of receivers
+        to:'bd@qmxpower.com',
         subject: title, // Subject line
         text: text, // plaintext body
     };
