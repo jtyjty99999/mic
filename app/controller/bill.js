@@ -124,7 +124,7 @@ exports.list = function* () {
     total = yield this.service.bill.count(sql);
   }
   result = result.map((d)=>{
-    d.time = moment(d.time).format('YYYY-MM-DD hh:mm:ss');
+    d.timestamp = moment(d.timestamp).format('YYYY-MM-DD hh:mm:ss');
     return d;
   });
   function sleep(ms) {
