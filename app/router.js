@@ -73,7 +73,9 @@ module.exports = app => {
     // 微信api收藏
     app.post('/api/fav', app.controller.fav.fav)
     app.get('/api/fav/listByUser', app.controller.fav.listByUser)
+    app.get('/api/fav/findByUser', app.controller.fav.findByUser)
     app.post('/api/fav/deleteFav', app.controller.fav.deleteFav)
+    
 
   // 微信api搜索词
 

@@ -38,6 +38,13 @@ module.exports = app => {
             return article;
         }
 
+        // 获取某条信息是否被收藏
+
+        * findByUser(openid, id){
+            const articles = yield app.mysql.query('select video_id from video_user_fav where user_id = ? and video_id = ?;', [openid, id]);
+            return articles;
+        }
+
 
         // 总数
         * count(where) {

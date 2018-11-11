@@ -38,3 +38,14 @@ exports.deleteFav = function *(){
         result
     };
 }
+
+exports.findByUser = function *(){
+    let result;
+    const openid = this.query.openid;
+    const id = this.query.id;
+    result = yield this.service.fav.findByUser(openid, id);
+    this.body = {
+        result
+    };
+}
+
