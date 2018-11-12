@@ -82,9 +82,8 @@ module.exports = app => {
 
     // 删除
     * remove(id) {
-      const result = yield app.mysql.update('video_video', {
+      const result = yield app.mysql.delete('video_video', {
         id:id,
-        deleted:1
       });
 
       return result.affectedRows === 1;
