@@ -19,6 +19,7 @@ module.exports = app => {
         is_scene:obj.is_scene,
         is_show:obj.is_show,
         is_text:obj.is_text,
+        short_image: obj.short_image,
         timestamp: app.mysql.literals.now,
       });
 
@@ -33,7 +34,7 @@ module.exports = app => {
 
     // 获取某条信息
     * find(id) {
-      const article = yield app.mysql.query('select video_video.id as video_id ,video_video.name as video_name, video_video.price, business, time, format,work_id, url, is_audio, is_text, is_model, is_show, is_scene, video_category.name as category_name, video_video.timestamp,category_id, description from video_video LEFT JOIN video_category on video_video.category_id = video_category.id where video_video.id = ?;', [ id ]);
+      const article = yield app.mysql.query('select video_video.id as video_id ,video_video.name as video_name, video_video.price, business, time, format,work_id, url, is_audio, is_text, is_model, is_show, is_scene, short_image, video_category.name as category_name, video_video.timestamp,category_id, description from video_video LEFT JOIN video_category on video_video.category_id = video_category.id where video_video.id = ?;', [ id ]);
 
       return article;
     }
@@ -60,7 +61,7 @@ module.exports = app => {
 
     // 搜索
     * searchByKeyword(pageNum, pageSize, keyword) {
-      let sql = `select id,name,url,price from video_video where name like '%` +keyword +`%' order by timestamp desc limit ? offset ?;`; 
+      let sql = `select id,name,url,short_image,price from video_video where name like '%` +keyword +`%' order by timestamp desc limit ? offset ?;`; 
       const articles = yield app.mysql.query(sql, [pageSize, (pageNum - 1) * pageSize ]);
       return articles;
     }

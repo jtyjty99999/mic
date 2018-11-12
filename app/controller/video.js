@@ -136,6 +136,7 @@ exports.main = function* () {
   const is_show = body.is_show;
   const is_model = body.is_model;
   const is_text = body.is_text;
+  const short_image = body.short_image;
 
 
   // work_id 从session里获取
@@ -156,7 +157,8 @@ exports.main = function* () {
       is_model,
       is_scene,
       is_show,
-      is_text
+      is_text,
+      short_image
     });
 
     yield this.service.workerLog.insert({
@@ -185,7 +187,8 @@ exports.main = function* () {
       is_model,
       is_scene,
       is_show,
-      is_text
+      is_text,
+      short_image
     });
 
     yield this.service.workerLog.insert({

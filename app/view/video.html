@@ -218,6 +218,7 @@
             $('#tr_is_audio').show();
             $('#tr_is_text').show();
             $('#tr_url').show();
+            $('#tr_short_image').show();
             $('#tr_work_id').hide();
         }, 0)
     }
@@ -347,7 +348,7 @@
             //'userName': userName,
         },
         height: 400,
-        colNames: ['编号','文件链接', '名称', '备注', '类目', '价格', '需求方', '上传人', '时长', '格式','场景颗粒度', '特效颗粒度', '模特颗粒度', '配音颗粒度', '字幕颗粒度','操作'],
+        colNames: ['编号','文件链接','缩略图', '名称', '备注', '类目', '价格', '需求方', '上传人', '时长', '格式','场景颗粒度', '特效颗粒度', '模特颗粒度', '配音颗粒度', '字幕颗粒度','操作'],
         edit:{
             closeAfterEdit:true,
         },
@@ -355,6 +356,7 @@
         colModel: [
             { name: 'id', index: 'id', width: 60, sorttype: "int", editable: false},
             { name: 'url', index: 'url', hidden: true, width: 150, editable: true, editoptions: { size: "50", maxlength: "1000" } },
+            { name: 'short_image', index: 'short_image', hidden: true, width: 150, editable: true, editoptions: { size: "50", maxlength: "1000" } },
             { name: 'name', index: 'name', width: 150, editable: true, formatter: "showlink", formatoptions:{baseLinkUrl:"/manager/video/detail",idName: "id"}, editoptions: { size: "20", maxlength: "100" } },
             { name: 'description', index: 'description', width: 150, editable: true, editoptions: { size: "20", maxlength: "100" } },
             { name: 'category_id', index: 'category_id', formatter: formatCategory, width: 70, editable: true, edittype: "select", editoptions: { value: categoryValue } },
@@ -581,6 +583,7 @@
         $('#tr_is_audio').show();
         $('#tr_is_text').show();
         $('#tr_url').show();
+        $('#tr_short_image').show();
         $('#tr_work_id').hide();
         
         form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />')

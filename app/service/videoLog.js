@@ -34,7 +34,7 @@ module.exports = app => {
         }
         // 获取某人列表
         * listByUser(pageNum, pageSize, work_id) {
-            const articles = yield app.mysql.query('select video_id, datetime ,video_video.name,video_video.price,video_video.url from video_log LEFT JOIN video_video on video_video.id = video_log.video_id where user_id = ? order by datetime desc limit ? offset ?;', [work_id, pageSize, (pageNum - 1) * pageSize] );
+            const articles = yield app.mysql.query('select video_id, datetime ,video_video.name,video_video.price,video_video.url,video_video.short_image from video_log LEFT JOIN video_video on video_video.id = video_log.video_id where user_id = ? order by datetime desc limit ? offset ?;', [work_id, pageSize, (pageNum - 1) * pageSize] );
             return articles;
         }
         // 获取某条信息
