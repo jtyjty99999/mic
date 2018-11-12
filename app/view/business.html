@@ -230,6 +230,9 @@ window.users = JSON.parse($('#users').val());
         multiboxonly: true,
 
         loadComplete: function () {
+            setTimeout(function(){
+				updatePagerIcons(table);
+			}, 0);
         },
 
         editurl: "/business",//nothing is saved

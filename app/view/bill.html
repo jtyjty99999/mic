@@ -316,6 +316,9 @@
         multiboxonly: true,
 
         loadComplete: function () {
+            setTimeout(function(){
+				updatePagerIcons(table);
+			}, 0);
         },
 
         editurl: "/bill",//nothing is saved

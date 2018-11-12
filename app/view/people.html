@@ -235,6 +235,9 @@
         multiboxonly: true,
 
         loadComplete: function () {
+            setTimeout(function(){
+				updatePagerIcons(table);
+			}, 0);
         },
 
         editurl: "/people",//nothing is saved
