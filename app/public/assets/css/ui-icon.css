@@ -14,10 +14,10 @@
 }
 .ui-icon,
 .ui-widget-content .ui-icon {
-	background-image: url("images/ui-icons_222222_256x240.png");
+	background-image: url("images/icon.png");
 }
 .ui-widget-header .ui-icon {
-	background-image: url("images/ui-icons_222222_256x240.png");
+	background-image: url("images/icon.png");
 }
 .ui-state-hover .ui-icon,
 .ui-state-focus .ui-icon,
