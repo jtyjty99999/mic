@@ -231,6 +231,7 @@ window.users = JSON.parse($('#users').val());
 
         loadComplete: function () {
             setTimeout(function(){
+                var table = this;
 				updatePagerIcons(table);
 			}, 0);
         },

@@ -414,6 +414,10 @@
         multiboxonly: true,
 
         loadComplete: function () {
+            setTimeout(function(){
+                var table = this;
+				updatePagerIcons(table);
+			}, 0);
         },
 
         editurl: "/video",//nothing is saved
