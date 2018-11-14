@@ -44,10 +44,19 @@ module.exports = app => {
       return articles;
     }
 
-    * listByRecommand(pageSize){
-      const articles = yield app.mysql.query('select * from video_recommand LEFT JOIN video_video  on video_recommand.video_id=video_video.id limit ?;', [ pageSize ]);
+    * listByRecommand(where, pageSize){
+      let sql = '';
+      if(where){
+        sql = `select * from video_video WHERE id >= (SELECT floor(RAND() * (SELECT MAX(id) FROM video_video))) ${where} ORDER BY id LIMIT 6`
+      }else{
+        sql = `select * from video_video WHERE id >= (SELECT floor(RAND() * (SELECT MAX(id) FROM video_video))) ORDER BY id LIMIT 6`
+      }
+
+      const articles = yield app.mysql.query(sql);
       return articles;
     }
+
+  
     
     // 搜索
     * search(pageNum, pageSize, where) {

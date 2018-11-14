@@ -268,7 +268,13 @@ exports.listByHot = function* () {
 exports.listByRecommand = function* () {
   const pageNum = +this.query.page || 1;
   const pageSize = +this.query.rows || 100;
-  let result = yield this.service.video.listByRecommand(pageSize);
+  let where = false;
+
+  if(this.query.category_id){
+    where = ' and category_id = ' + this.query.category_id
+  }
+
+  let result = yield this.service.video.listByRecommand(where, pageSize);
   this.body = {
     rows: result,
   };
