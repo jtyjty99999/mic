@@ -80,16 +80,27 @@ exports.list = function* () {
     const pageNum = +this.query.pageNumber || 1;
     const pageSize = +this.query.pageSize || 100;
     const key_id = this.query.key_id;
-    let result, total;
+    let result = [], total = 0;
     if(key_id && key_id !== '0'){
+                // 查所有子集
+                
+                let d = yield this.service.keyUnit.getChildNode(key_id);
+                console.log(d);
+                d = d[0].childs.split(',');
+                d.shift();
+                for(let i =0, l = d.length;i<l ;i++){
+                    result = result.concat(yield this.service.keyUnit.listByKeyid(pageNum, pageSize, d[i]));
+                    total += yield this.service.keyUnit.count('key_id='+d[i]);
+                }
+                /*
         result = yield this.service.keyUnit.listByKeyid(pageNum, pageSize, key_id);
-        total = yield this.service.keyUnit.count('key_id='+key_id);
+        total = yield this.service.keyUnit.count('key_id='+key_id);*/
     }else{
         result = yield this.service.keyUnit.list(pageNum, pageSize);
         total = yield this.service.keyUnit.count('1=1');
     }
     
-
+    
     this.body = {
         pageNumber: pageNum,
         pageSize,
@@ -97,51 +108,4 @@ exports.list = function* () {
         totalPage: total > pageSize ? (parseInt(total / pageSize) + 1) : 1,
         list: result
     };
-    /*
-    this.body = {
-        "pageSize": 10,
-        "pageNumber": 1,
-        "totalRow": 11,
-        "totalPage": 2,
-        "list": [
-            {
-                "expert": "计算机网络",
-                "birthday": "2014-11-12",
-                "sex": 1,
-                "status": 1,
-                "remark": "asdfasdfsdf",
-                "sexName": "男",
-                "statusName": "启用",
-                "phone2": "13777777777",
-                "password": "e10adc3949ba59abbe56e057f20f883e",
-                "phone1": "13655555555",
-                "id": 1,
-                "update_time": "2014-11-24 15:50:22",
-                "email": "aaa@aa.com",
-                "login_name": "zhangsan",
-                "name": "张三",
-                "create_time": "2014-09-08 16:22:01",
-                "qq": "44444444"
-            },
-            {
-                "expert": "计算机网络1",
-                "birthday": "2014-11-03",
-                "sex": 0,
-                "status": 1,
-                "remark": "124312431",
-                "sexName": "女",
-                "statusName": "启用",
-                "phone2": "1234123421",
-                "password": "",
-                "phone1": "1241342341431",
-                "id": 5620,
-                "update_time": "2014-11-24 13:37:58",
-                "email": "341431@aa.comn",
-                "login_name": "lisi",
-                "name": "李四",
-                "create_time": "2014-09-08 22:24:05",
-                "qq": "34124121"
-            }
-        ]
-    }*/
 }

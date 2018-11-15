@@ -37,6 +37,13 @@ module.exports = app => {
     const count = yield app.mysql.query('select count(*) from video_key_unit');
     return count[0]['count(*)'];
   } 
+  * getChildNode(id){
+    const res = yield app.mysql.query('SELECT getChild(?) as childs',[id]);
+    return res
+  }
+
+  
+
 
     // 更新
     * update(data) {
