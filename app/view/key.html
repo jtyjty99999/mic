@@ -510,6 +510,8 @@ div.bPage.bPageRight{
         $(document).delegate('.keyunit', 'click', function(d){
             
             if(isDelete){
+                console.log($(this));
+                $(this).find('input[type=checkbox]').prop('checked', !$(this).find('input[type=checkbox]').prop('checked'))
                 return
                 $(this).toggleClass('delete-active');
             }else{
