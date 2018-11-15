@@ -45,11 +45,11 @@ exports.upload = function* () {
       format:d[6],
       url:d[7],
       short_image:d[8],
-      is_audio:d[9],
-      is_model:d[10],
-      is_scene:d[11],
-      is_show:d[12],
-      is_text:d[13]
+      is_scene:d[9],
+      is_show:d[10],
+      is_text:d[11],
+      is_audio:d[12],
+      is_model:d[13]
     });
     yield this.service.workerLog.insert({
       event: '上传视频' + d[0],
