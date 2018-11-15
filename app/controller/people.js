@@ -22,7 +22,7 @@ exports.main = function *(){
 
   const body = this.request.body;
   const oper = body.oper; 
-  const id = body.id;
+  let id = body.id;
   const phone = body.phone;
   const name = body.name;
   const cname = body.cname;
@@ -72,13 +72,19 @@ exports.main = function *(){
 
   }else if(oper === 'del'){
 
-    yield this.service.workerLog.insert({
-      event: '删除人员id'+ id,
-      place:'人员管理',
-      work_id
-    });
+    id = id.split(',');
+    for(let i =0, l = id.length;i<l; i++){
 
-    yield this.service.people.remove(id);
+      yield this.service.workerLog.insert({
+        event: '删除人员id'+ id[i],
+        place:'人员管理',
+        work_id
+      });
+  
+      yield this.service.people.remove(id[i]);
+    }
+
+
 
     this.body = 'success';
   }

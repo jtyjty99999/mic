@@ -23,7 +23,7 @@ exports.main = function *(){
 
   const body = this.request.body;
   const oper = body.oper; 
-  const id = body.id;
+  let id = body.id;
   const work_id = this.session.user.id;
   const phone = body.phone;
   const name = body.name;
@@ -66,13 +66,19 @@ exports.main = function *(){
 
   }else if(oper === 'del'){
 
-    yield this.service.business.remove(id);
+    id = id.split(',');
+    for(let i =0, l = id.length;i<l; i++){
 
-    yield this.service.workerLog.insert({
-      event: '删除商家'+ id,
-      place:'商家库',
-      work_id
-    });
+      yield this.service.business.remove(id[i]);
+
+      yield this.service.workerLog.insert({
+        event: '删除商家'+ id[i],
+        place:'商家库',
+        work_id
+      });
+
+    }
+
 
     this.body = 'success';
   }

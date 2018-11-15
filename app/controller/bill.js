@@ -25,7 +25,7 @@ exports.main = function *(){
 
   const body = this.request.body;
   const oper = body.oper; 
-  const id = body.id;
+  let id = body.id;
   const name = body.name;
   const price = body.price;
   const business = body.business;
@@ -95,13 +95,19 @@ exports.main = function *(){
 
     let work_id = this.session.user.id;
 
-    yield this.service.bill.remove(id);
+    id = id.split(',');
+    for(let i =0, l = id.length;i<l; i++){
 
-    yield this.service.workerLog.insert({
-      event: '删除订单'+ id,
-      place:'订单管理',
-      work_id
-    });
+      yield this.service.bill.remove(id[i]);
+
+      yield this.service.workerLog.insert({
+        event: '删除订单'+ id[i],
+        place:'订单管理',
+        work_id
+      });
+    }
+
+
 
     this.body = 'success';
   }

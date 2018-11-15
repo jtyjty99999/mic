@@ -122,7 +122,7 @@ exports.main = function* () {
 
   const body = this.request.body;
   const oper = body.oper;
-  const id = body.id;
+  let id = body.id;
   const work_id = this.session.user.id;
   const name = body.name;
   const description = body.description;
@@ -202,13 +202,16 @@ exports.main = function* () {
 
   } else if (oper === 'del') {
 
-    yield this.service.workerLog.insert({
-      event: '删除视频' + id,
-      place: '视频库',
-      work_id
-    });
-
-    yield this.service.video.remove(id);
+    id = id.split(',');
+    for(let i =0, l = id.length;i<l; i++){
+      yield this.service.workerLog.insert({
+        event: '删除视频' + id[i],
+        place: '视频库',
+        work_id
+      });
+  
+      yield this.service.video.remove(id[i]);
+    }
 
     this.body = 'success';
   }
