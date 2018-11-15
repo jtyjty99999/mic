@@ -89,9 +89,15 @@ exports.list = function* () {
                 d = d[0].childs.split(',');
                 d.shift();
                 for(let i =0, l = d.length;i<l ;i++){
-                    result = result.concat(yield this.service.keyUnit.listByKeyid(pageNum, pageSize, d[i]));
+                    //先全取出来
+                    result = result.concat(yield this.service.keyUnit.listByKeyid(1, 1000, d[i]));
                     total += yield this.service.keyUnit.count('key_id='+d[i]);
+                    console.log(d[i]);
                 }
+                
+                //再做分页
+                result = result.splice((pageNum-1 * pageSize), pageSize);
+
                 /*
         result = yield this.service.keyUnit.listByKeyid(pageNum, pageSize, key_id);
         total = yield this.service.keyUnit.count('key_id='+key_id);*/

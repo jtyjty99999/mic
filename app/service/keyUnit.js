@@ -34,7 +34,7 @@ module.exports = app => {
 
   // 总数
   * count(where) {
-    const count = yield app.mysql.query('select count(*) from video_key_unit');
+    const count = yield app.mysql.query('select count(*) from video_key_unit where ' + where);
     return count[0]['count(*)'];
   } 
   * getChildNode(id){
