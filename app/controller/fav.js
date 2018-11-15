@@ -9,10 +9,16 @@ exports.fav = function* () {
     const body = this.request.body;
     const video_id = body.video_id;
     const openid = body.openid;
-    yield this.service.fav.insert({
-        video_id,
-        user_id: openid
-    });
+    const isFav= body.isFav;
+    if(isFav === true){
+        yield this.service.fav.deleteFromUser(video_id, openid);
+    }else{
+        yield this.service.fav.insert({
+            video_id,
+            user_id: openid
+        });
+    }
+    
     this.body = 'success';
 }
 
