@@ -98,7 +98,7 @@ exports.list = function* () {
   const _search = this.query._search;
   const sql = this.query.sql;
   let result, total;
-
+  
   if(_search !== 'true'){
     result = yield this.service.people.list(pageNum, pageSize);
     total = yield this.service.people.count('1=1');
@@ -108,6 +108,13 @@ exports.list = function* () {
   }
   function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms))
+  }
+
+  if(this.session.user.auth !==0){
+    result = result.filter((d)=>{
+      return d.id === this.session.user.id
+    });
+    total = 1;
   }
 
   this.body = {

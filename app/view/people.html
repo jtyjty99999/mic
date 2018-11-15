@@ -18,10 +18,13 @@
 
             <div class="row">
                 <div class="col-xs-12">
-                    <div class="operator">
-                        <button class="btn btn-success" id="search">搜索</button>
-                        <button class="btn btn-success" id="add">添加</button>
-                    </div>
+                        {% if user.auth === 0 %}
+                        <div class="operator">
+                                <button class="btn btn-success" id="search">搜索</button>
+                                <button class="btn btn-success" id="add">添加</button>
+                            </div>
+                        {% endif %}
+                    
 
 
                     <table id="grid-table"></table>
@@ -174,8 +177,9 @@
     };
     window.auth = $('#main').attr('auth');
     function formatLink(cellValue, options, rowObject) {
+        console.log(window.auth);
         let linkHtml
-        if(window.auth === 0){
+        if(window.auth !== '0'){
              linkHtml = cellValue;
         }else{
              linkHtml = "<a href='/manager/index?userid="+ rowObject.id+"'>"+ cellValue+"</a>";
@@ -228,7 +232,7 @@
         viewrecords: true,
         rowNum: 10,
         rowList: [10, 20, 30, 40, 50],
-        pager: pager_selector,
+        pager: window.auth === '0' ? pager_selector : null,
         altRows: true,
         //toppager: true,
 
@@ -409,6 +413,9 @@
         $('#tr_password').show();
         $('#tr_auth').show();
         $('#tr_name').show();
+        if(window.auth !== '0'){
+            $('#tr_auth').hide();
+        }
         form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />')
     }
 
