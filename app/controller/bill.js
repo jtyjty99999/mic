@@ -134,7 +134,8 @@ exports.list = function* () {
   }
   this.body = {
     total: total > pageSize ? (parseInt(total / pageSize) + 1) : 1,
-    rows: result
+    rows: result,
+    totalRow:total,
   };
 }
 

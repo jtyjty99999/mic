@@ -238,7 +238,8 @@ exports.list = function* () {
   }
   this.body = {
     total: parseInt(total / pageSize) + 1,
-    rows: result
+    rows: result,
+    totalRow:total,
   };
 }
 
