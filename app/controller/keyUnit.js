@@ -96,7 +96,7 @@ exports.list = function* () {
                 }
                 
                 //再做分页
-                result = result.splice((pageNum-1 * pageSize), pageSize);
+                result = result.splice((pageNum-1) * pageSize, pageSize);
 
                 /*
         result = yield this.service.keyUnit.listByKeyid(pageNum, pageSize, key_id);
