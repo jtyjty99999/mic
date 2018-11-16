@@ -34,9 +34,9 @@ exports.index = function* () {
   }
   yield this.render('index.html', {
     current: "people",
-    key: yield this.service.keyUnit.count({
-      work_id
-    }),
+    key: yield this.service.keyUnit.count(
+      'work_id = ' + work_id
+    ),
     video: yield this.service.video.count({
       work_id
     }),
