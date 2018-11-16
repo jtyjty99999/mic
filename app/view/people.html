@@ -355,7 +355,9 @@
                 $(grid_selector).jqGrid('setGridParam', { postData: {sql : sql} });
                 console.log(sql);
             },   
+            sopt:["cn","nc",'eq', 'ne'],//["eq","ne","lt","le","gt","ge","bw","bn","ew","en","cn","nc","nu","nn"]
             multipleSearch: true,
+            closeAfterSearch:true
             //multipleGroup:true,
             //showQuery: true
             
