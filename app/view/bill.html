@@ -254,7 +254,7 @@
             //'userName': userName,
         },
         height: 400,
-        colNames: ['编号', '订单名称', '商家名称','联系方式', '类目', '订单金额', '对接人', '状态', '场景颗粒度', '特效颗粒度', '模特颗粒度', '配音颗粒度', '字幕颗粒度', '操作'],
+        colNames: ['编号', '订单名称', '商家名称','联系方式', '类目', '订单金额', '对接人', '状态', '时长', '比例', '渠道', '操作'],
         jsonReader: {  
             records:"totalRow"
         },
@@ -268,31 +268,9 @@
             { name: 'price', index: 'price', width: 150, editable: true, editoptions: { size: "20", maxlength: "40" } },
             { name: 'work_id', index: 'work_id', formatter: formatUser, width: 70, editable: true, edittype: "select", editoptions: { value: userValue } },
             { name: 'status', index: 'status', width: 60, editable: true, formatter: formatStatus, edittype: "select", editoptions: { value: "0:未沟通;1:进行中;2:已结算;3:作废" } },
-            { name: 'is_scene', index: 'is_scene', width: 70, hidden: true, editable: true, edittype: "custom",
-                        editoptions: {
-                            custom_value: getFreightElementValue,
-                            custom_element: createFreightEditElement
-                        } },
-            { name: 'is_show', index: 'is_show', width: 70, hidden: true, editable: true, edittype: "custom",
-                        editoptions: {
-                            custom_value: getFreightElementValue,
-                            custom_element: createFreightEditElement
-                        }},
-            { name: 'is_model', index: 'is_model', width: 70, hidden: true, editable: true, edittype: "custom",
-                        editoptions: {
-                            custom_value: getFreightElementValue,
-                            custom_element: createFreightEditElement
-                        } },
-            { name: 'is_audio', index: 'is_audio', width: 70, hidden: true, editable: true, edittype: "custom",
-                        editoptions: {
-                            custom_value: getFreightElementValue,
-                            custom_element: createFreightEditElement
-                        } },
-            { name: 'is_text', index: 'is_text', width: 70, hidden: true, editable: true, edittype: "custom",
-                        editoptions: {
-                            custom_value: getFreightElementValue,
-                            custom_element: createFreightEditElement
-                        } },
+            { name: 'time', index: 'time', width: 150, editable: true, editoptions: { size: "20", maxlength: "40" } },
+            { name: 'scale', index: 'scale', width: 150, editable: true, editoptions: { size: "20", maxlength: "40" } },
+            { name: 'channel', index: 'channel', width: 150, editable: true, editoptions: { size: "20", maxlength: "40" } },
             {
                 name: 'myac', index: '', width: 80, fixed: true, sortable: false, resize: false,
                 formatter: 'actions',

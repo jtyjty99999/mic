@@ -35,6 +35,9 @@ exports.main = function *(){
   const is_show = body.is_show;
   const is_model = body.is_model;
   const is_text = body.is_text;
+  const time = body.time;
+  const scale = body.scale;
+  const channel = body.channel;
   const phone = body.phone;
   const category_id = body.category_id;
   const openid = body.openid;
@@ -52,6 +55,9 @@ exports.main = function *(){
       is_model,
       is_text,
       is_show,
+      time,
+      scale,
+      channel,
       phone,
       category_id,
       openid
@@ -81,6 +87,9 @@ exports.main = function *(){
       is_model,
       is_text,
       is_show,
+      time,
+      scale,
+      channel,
       phone,
       category_id,
     });
