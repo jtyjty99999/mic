@@ -49,7 +49,7 @@ module.exports = app => {
       if(where){
         sql = `select * from video_video WHERE id >= (SELECT floor(RAND() * (SELECT MAX(id) FROM video_video))) ${where} ORDER BY id LIMIT 6`
       }else{
-        sql = `select * from video_video WHERE id >= (SELECT floor(RAND() * (SELECT MAX(id) FROM video_video))) ORDER BY id LIMIT 6`
+        sql = `select video_id,video_video.time ,video_video.name as name, video_video.short_image as short_image from video_recommand LEFT JOIN video_video on video_recommand.video_id=video_video.id ORDER BY video_recommand.id LIMIT 6`
       }
 
       const articles = yield app.mysql.query(sql);

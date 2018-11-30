@@ -18,6 +18,12 @@ module.exports = app => {
   app.get('/business', admin, app.controller.business.list);
   app.get('/manager/business', admin, app.controller.business.index);
   
+  //推荐管理
+  app.post('/recommand', admin, app.controller.recommand.main);
+  app.get('/recommand', admin, app.controller.recommand.list);
+  app.get('/manager/recommand', admin, app.controller.recommand.index);
+  
+
   //视频库
   app.get('/manager/video/detail', admin, app.controller.video.detail);
   
