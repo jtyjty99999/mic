@@ -224,10 +224,17 @@ exports.list = function* () {
   const pageSize = +this.query.rows || 100;
   const _search = this.query._search;
   const sql = this.query.sql;
-  let result, total;
+  let result, total, orderby;
+
+  const sidx = this.query.sidx;
+  const sord = this.query.sord;
+
+  if(sidx){
+    orderby = `order by ${sidx} ${sord}`;
+  }
 
   if (_search !== 'true') {
-    result = yield this.service.video.list(pageNum, pageSize);
+    result = yield this.service.video.list(pageNum, pageSize, orderby);
     total = yield this.service.video.count('1=1');
   } else {
     result = yield this.service.video.search(pageNum, pageSize, sql);

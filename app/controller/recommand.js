@@ -41,7 +41,6 @@ exports.main = function *(){
 
     yield this.service.recommand.update({
       id,
-      work_id:body.work_id,
       video_id
     });
 

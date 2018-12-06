@@ -27,8 +27,16 @@ module.exports = app => {
     }
 
     // 获取列表
-    * list(pageNum, pageSize) {
-      const articles = yield app.mysql.query('select * from video_video where deleted = 0 order by timestamp desc limit ? offset ?;', [ pageSize, (pageNum - 1) * pageSize ]);
+    * list(pageNum, pageSize, orderby) {
+      let articles, sql;
+
+      if(orderby){
+        sql = 'select * from video_video where deleted = 0 ' + orderby;
+        articles = yield app.mysql.query(sql + ' limit ? offset ?;', [ pageSize, (pageNum - 1) * pageSize ]);
+      }else{
+        articles = yield app.mysql.query('select * from video_video where deleted = 0 order by timestamp desc limit ? offset ?;', [ pageSize, (pageNum - 1) * pageSize ]);
+      }
+       
       return articles;
     }
 

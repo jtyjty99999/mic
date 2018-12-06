@@ -13,7 +13,7 @@ module.exports = app => {
 
     // 获取列表
     * list(pageNum, pageSize) {
-      const articles = yield app.mysql.query('select video_video.id as id,video_video.name, datetime from video_recommand left join video_video on video_recommand.video_id = video_video.id order by video_recommand.datetime desc limit ? offset ?;', [ pageSize, (pageNum - 1) * pageSize ]);
+      const articles = yield app.mysql.query('select video_recommand.id as id, video_video.id as video_id,video_video.name, datetime from video_recommand left join video_video on video_recommand.video_id = video_video.id order by video_recommand.datetime desc limit ? offset ?;', [ pageSize, (pageNum - 1) * pageSize ]);
       return articles;
     }
 
