@@ -28,6 +28,8 @@ exports.upload = function* () {
   rows.shift();
 
   let categorys = yield this.service.category.list();
+  let platforms = yield this.service.platform.list();
+  let columns = yield this.service.column.list();
   categorys = categorys.filter((d) => { return d.level === 1 });
 
   for(let i = 0, l = rows.length;i< l; i++){
@@ -49,7 +51,14 @@ exports.upload = function* () {
       is_show:d[10],
       is_text:d[11],
       is_audio:d[12],
-      is_model:d[13]
+      is_model:d[13],
+      platform_id:platforms.filter((platform)=>{
+        return platform.name === d[14]
+      })[0].id || 1,
+      column_id:columns.filter((column)=>{
+        return column.name === d[15]
+      })[0].id || 1,
+      keystring:d[16]
     });
     yield this.service.workerLog.insert({
       event: '上传视频' + d[0],
@@ -77,11 +86,15 @@ exports.upload = function* () {
 
 exports.index = function* () {
   let categorys = yield this.service.category.list();
+  let platforms = yield this.service.platform.list();
+  let columns = yield this.service.column.list();
   categorys = categorys.filter((d) => { return d.level === 1 });
   let users = yield this.service.people.listAll()
   yield this.render('video.html', {
     current: "video",
+    columns: JSON.stringify(columns),
     categorys: JSON.stringify(categorys),
+    platforms: JSON.stringify(platforms),
     title: "视频库",
     users: JSON.stringify(users)
   });
@@ -127,6 +140,9 @@ exports.main = function* () {
   const name = body.name;
   const description = body.description;
   const category_id = body.category_id;
+  const platform_id = body.platform_id;
+  const column_id = body.column_id;
+  const keystring = body.keystring;
   const price = body.price;
   const business = body.business;
   const time = body.time;
@@ -159,7 +175,10 @@ exports.main = function* () {
       is_scene,
       is_show,
       is_text,
-      short_image
+      short_image,
+      platform_id,
+      column_id,
+      keystring
     });
 
     yield this.service.workerLog.insert({
@@ -189,7 +208,10 @@ exports.main = function* () {
       is_scene,
       is_show,
       is_text,
-      short_image
+      short_image,
+      platform_id,
+      column_id,
+      keystring
     });
 
     yield this.service.workerLog.insert({

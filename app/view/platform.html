@@ -2,17 +2,6 @@
 
 {% block style %}
 
-<style>
-#addBatch{
-    width:160px;
-    background:#1fb1f2!important
-    }
-.ui-jqdialog{
-    width:700px!important
-}
-</style>
-
-
 {% endblock %}
 
 {% block header %}
@@ -21,8 +10,6 @@
 
 {% block body %}
 <!-- Main Content -->
-
-
 
 <div class="main-content">
     <div class="main-content-inner">
@@ -34,51 +21,7 @@
                     <div class="operator">
                         <button class="btn btn-success" id="search">搜索</button>
                         <button class="btn btn-success" id="add">添加</button>
-                        <button href="#modal-form" role="button" data-toggle="modal" class="btn btn-success" id="addBatch">批量导入</button>
                     </div>
-
-
-                    <div id="modal-form" class="modal" tabindex="-1">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                        <h4 class="blue bigger">上传视频／图片</h4>
-                                    </div>
-                    
-                                    <div class="modal-body">
-                                        <div class="row">
-                                            <div class="col-xs-12 col-sm-12">
-                                                <form action="">
-                                                        <a href="/public/assets/tpl.xlsx">点击下载excel模板</a>
-                                                        <div class="form-group">
-                                                                <label for="form-field-url">excel文件</label>
-                                
-                                                                <div>
-                                                                    <input type="file" id="form-field-url" placeholder="文件路径" value="" />
-                                                                    
-                                                                </div>
-                                                            </div>
-                                                </form>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                    
-                                    <div class="modal-footer">
-                                        <button class="btn btn-sm" data-dismiss="modal">
-                                            <i class="ace-icon fa fa-times"></i>
-                                            取消
-                                        </button>
-                    
-                                        <button class="btn btn-sm btn-primary" id="uploadExcel">
-                                            <i class="ace-icon fa fa-check"></i>
-                                            确定
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div><!-- PAGE CONTENT ENDS -->
 
 
                     <table id="grid-table"></table>
@@ -91,49 +34,14 @@
         </div><!-- /.page-content -->
     </div>
 </div><!-- /.main-content -->
-
-<textarea name="" id="categorys" cols="30" rows="10" style="display:none">{{categorys}}</textarea>
 <textarea name="" id="users" cols="30" rows="10" style="display:none">{{users}}</textarea>
-<textarea name="" id="platforms" cols="30" rows="10" style="display:none">{{platforms}}</textarea>
-<textarea name="" id="columns" cols="30" rows="10" style="display:none">{{columns}}</textarea>
+
 {% endblock %}
 
 {% block script %}
 <!-- inline scripts related to this page -->
 <script type="text/javascript">
-
-  $('#uploadExcel').click(function(e) {
-        e.preventDefault();
-        var formData = new FormData();
-        // Attach file
-        formData.append('image', $('input[type=file]')[0].files[0]);
-        // console.log(formData);
-        $.ajax({
-            url: '/video/uploadBatch',
-            data: formData,
-            method: 'POST',
-            contentType: false, // NEEDED, DON'T OMIT THIS (requires jQuery 1.6+)
-            processData: false, // NEEDED, DON'T OMIT THIS
-            success: function(result) {
-                console.log(result);
-                if(result === 'success'){
-                    alert('批量上传成功!');
-                    $('#modal-form').modal('hide');
-                    location.reload()
-                }
-                //location.href = result.url;
-            },
-            error: function(responseStr) {
-                alert("error", responseStr);
-            }
-        })
-    });
-
-    window.categorys = JSON.parse($('#categorys').val());
-    window.platforms = JSON.parse($('#platforms').val());
-    window.columns = JSON.parse($('#columns').val());
-    window.users = JSON.parse($('#users').val());
-
+window.users = JSON.parse($('#users').val());
     var grid_data =
         [
             { id: 1, name: "Desktop Computer", work_id: 1, phone: 111222, status: 0 },
@@ -218,16 +126,6 @@
     function addRow() {
         var grid = $("#grid-table");
         grid.editGridRow("new", { closeAfterAdd: true });
-        setTimeout(function () {
-            $('#tr_is_scene').show();
-            $('#tr_is_show').show();
-            $('#tr_is_model').show();
-            $('#tr_is_audio').show();
-            $('#tr_is_text').show();
-            $('#tr_url').show();
-            $('#tr_short_image').show();
-            $('#tr_work_id').hide();
-        }, 0)
     }
     function delRow() {
         var grid = $("#grid-table");
@@ -268,25 +166,13 @@
             }, 20);
         }
     })
-
+    
     function formatStatus(cellValue, options, rowObject) {
-        return ['待定', '进行中', '沟通中', '完成'][cellValue]
-    };
-    function formatCategory(cellValue, options, rowObject) {
-        console.log(cellValue, categorys.filter((d) => (d.id === cellValue)));
-        return categorys.filter((d) => (d.id === cellValue))[0].name
+        return ['生效', '失效'][cellValue]
     };
     function formatUser(cellValue, options, rowObject) {
         console.log(cellValue, users.filter((d) => (d.id === cellValue)));
         return users.filter((d) => (d.id === cellValue))[0].name
-    };
-    function formatPlatform(cellValue, options, rowObject) {
-        console.log(cellValue, platforms.filter((d) => (d.id === cellValue)));
-        return cellValue ? platforms.filter((d) => (d.id === cellValue))[0].name : '';
-    };
-    function formatColumn(cellValue, options, rowObject) {
-        console.log(cellValue, columns.filter((d) => (d.id === cellValue)));
-        return cellValue ? columns.filter((d) => (d.id === cellValue))[0].name : '';
     };
 
 
@@ -299,77 +185,6 @@
         }
     });
 
-    var categoryValue = '';
-    categorys.forEach((d, i) => {
-        categoryValue += d.id;
-        categoryValue += ':' + d.name;
-        if (i !== categorys.length - 1) {
-            categoryValue += ';'
-        }
-    });
-
-    var columnValue = '';
-    columns.forEach((d, i) => {
-        columnValue += d.id;
-        columnValue += ':' + d.name;
-        if (i !== categorys.length - 1) {
-            columnValue += ';'
-        }
-    });
-
-    var platformValue = '';
-    platforms.forEach((d, i) => {
-        platformValue += d.id;
-        platformValue += ':' + d.name;
-        if (i !== categorys.length - 1) {
-            platformValue += ';'
-        }
-    });
-
-    function createFreightEditElement(value, editOptions) {
-        console.log(editOptions);
-        var div = $("<div style='margin-bottom:5px;margin-top:-10px;'></div>");
-        var label = $("<label class='radio-inline'></label>");
-        var radio = $("<input>", { type: "radio", value: "1", name: editOptions.name, id: editOptions.id, checked: value ==1  });
-        label.append(radio).append("有");
-        var label1 = $("<label class='radio-inline'></label>");
-        var radio1 = $("<input>", { type: "radio", value: "0", name: editOptions.name, id: editOptions.id, checked: value != 1 });
-        label1.append(radio1).append("无");
-        div.append(label).append(label1);
-
-        return div;
-    }
-
-    function createVideoLink(value, options){
-        var link = $("<a href = '/manager/video/show?' >" + value + "</a>")
-        return link
-    }
-    /*
-    function getFreightElementValue(elem, oper, value) {
-        var name = $(elem).text();
-        return name;
-    }*/
-
-    // The javascript executed specified by JQGridColumn.EditTypeCustomGetValue when EditType = EditType.Custom
-    // One parameter passed - the custom element created in JQGridColumn.EditTypeCustomCreateElement
-    function getFreightElementValue(elem, oper, value) {
-        if (oper === "set") {
-            var radioButton = $(elem).find("input:radio[value='" + value + "']");
-            if (radioButton.length > 0) {
-                radioButton.prop("checked", true);
-            }
-        }
-
-        if (oper === "get") {
-            return $(elem).find("input:radio:checked").val();
-        }
-    }
-
-    function formatLink(cellValue, options, rowObject) {
-            var linkHtml = "<a href='/manager/video/detail?id="+ rowObject.id+"'>"+ cellValue+"</a>";
-            return linkHtml;
-        }
-        
     $(grid_selector).jqGrid({
         //direction: "rtl",
         //data: grid_data,
@@ -377,38 +192,20 @@
         beforeProcessing: function () { console.log(111111);},
         datatype : "json",
         mtype: "GET",
-        url: '/video',
+        url: '/platform',
         postData: {
             //'userName': userName,
         },
         height: 400,
-        colNames: ['编号','文件链接','缩略图', '名称', '备注', '类目', '价格', '需求方', '上传人','平台','栏目', '时长', '格式','颗粒度','操作'],
-        edit:{
-            closeAfterEdit:true,
-        },
+        colNames: ['编号', '平台名称', '状态', '备注','操作'],
+
         //{id:6,name:"Desktop cxzczzxc",work_id:"222",phone:4234324,status:0},
         colModel: [
-            { name: 'id', index: 'id', width: 60, sorttype: "int", editable: false},
-            { name: 'url', index: 'url', hidden: true, width: 150, editable: true, editoptions: { size: "50", maxlength: "1000" },formoptions: {rowpos:1,colpos:1} },
-            { name: 'short_image', index: 'short_image', hidden: true, width: 150, editable: true, editoptions: { size: "50", maxlength: "1000" },formoptions: {rowpos:2,colpos:1} },
-            { name: 'name', index: 'name', width: 150, editable: true, formatter: "showlink", formatoptions:{baseLinkUrl:"/manager/video/detail",idName: "id"}, editoptions: { size: "20", maxlength: "100" },formoptions: {rowpos:3,colpos:1}},
-            { name: 'description', index: 'description', width: 150, editable: true, editoptions: { size: "20", maxlength: "100" } },
-            { name: 'category_id', index: 'category_id', formatter: formatCategory, width: 70, editable: true, edittype: "select", editoptions: { value: categoryValue },formoptions: {rowpos:1,colpos:2} },
-            { name: 'price', index: 'price', width: 150, editable: true, editoptions: { size: "20", maxlength: "20" } },
-            { name: 'business', index: 'business', width: 150, editable: true, editoptions: { size: "20", maxlength: "100" } },
-            { name: 'work_id', index: 'work_id', formatter: formatUser, width: 70, editable: true, edittype: "select", editoptions: { value: userValue } },
-            { name: 'platform_id', index: 'platform_id', formatter: formatPlatform, width: 70, editable: true, edittype: "select", editoptions: { value: platformValue },formoptions: {rowpos:2,colpos:2} },
-            { name: 'column_id', index: 'column_id', formatter: formatColumn, width: 70, editable: true, edittype: "select", editoptions: { value: columnValue },formoptions: {rowpos:3,colpos:2} },
-            { name: 'time', index: 'time', width: 70, editable: true, editoptions: { size: "20", maxlength: "30" } },
-            { name: 'format', index: 'format', width: 60, editable: true, edittype: "select", editoptions: { value: "MP4:MP4;MOV:MOV;WMV:WMV" } },
-            { name: 'keystring', index: 'keystring', width: 350, editable: true, edittype:"textarea", editoptions:{rows:"10",cols:"60"},formoptions: {rowspan:2} },
-            /*
-            { name: 'is_scene', index: 'is_scene', width: 70, hidden: true, editable: true, edittype: "custom",
-                        editoptions: {
-                            custom_value: getFreightElementValue,
-                            custom_element: createFreightEditElement
-                        } }
-           ,*/{
+            { name: 'id', index: 'id', width: 60, sorttype: "int", editable: false },
+            { name: 'name', index: 'name', width: 150, editable: true, editoptions: { size: "20", maxlength: "40" } },
+            { name: 'status', index: 'status', width: 60, editable: true, formatter: formatStatus, edittype: "select", editoptions: { value: "0:生效;1:失效" } },
+            { name: 'comment', index: 'comment', width: 150, editable: true, editoptions: { size: "20", maxlength: "40" } },
+            {
                 name: 'myac', index: '', width: 80, fixed: true, sortable: false, resize: false,
                 formatter: 'actions',
                 formatoptions: {
@@ -420,7 +217,9 @@
                 }
             },
         ],
-
+        jsonReader: {  
+            records:"totalRow"
+        },
         viewrecords: true,
         rowNum: 10,
         rowList: [10, 20, 30, 40, 50],
@@ -439,10 +238,10 @@
 			}, 0);
         },
 
-        editurl: "/video",//nothing is saved
-        jsonReader: {  
-            records:"totalRow"
-        },
+        editurl: "/platform",//nothing is saved
+
+        //,autowidth: true,
+
 
         /**
         ,
@@ -485,7 +284,7 @@
         },
         {
             //edit record form
-            //closeAfterEdit: true,
+            closeAfterEdit: true,
             //width: 700,
             recreateForm: true,
             beforeShowForm: function (e) {
@@ -543,7 +342,6 @@
                 $(grid_selector).jqGrid('setGridParam', { postData: {sql : sql} });
                 console.log(sql);
             },   
-
             sopt:["cn","nc",'eq', 'ne'],//["eq","ne","lt","le","gt","ge","bw","bn","ew","en","cn","nc","nu","nn"]
             multipleSearch: true,
             closeAfterSearch:true
@@ -603,15 +401,6 @@
 
     function beforeEditCallback(e) {
         var form = $(e[0]);
-        $('#tr_is_scene').show();
-        $('#tr_is_show').show();
-        $('#tr_is_model').show();
-        $('#tr_is_audio').show();
-        $('#tr_is_text').show();
-        $('#tr_url').show();
-        $('#tr_short_image').show();
-        $('#tr_work_id').hide();
-        
         form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />')
     }
 
@@ -629,7 +418,7 @@
         // show loading message
         $(grid_selector)[0].grid.beginReq();
         $.ajax({
-            url: "http://localhost:7001/business",
+            url: "http://localhost:7001/platform",
             success: function (result) {
                 gridArrayData = gridArrayData.concat(result.rows);
                 console.log(gridArrayData);

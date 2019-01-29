@@ -18,6 +18,21 @@ module.exports = app => {
   app.get('/business', admin, app.controller.business.list);
   app.get('/manager/business', admin, app.controller.business.index);
   
+  //套餐管理
+  app.post('/package', admin, app.controller.package.main);
+  app.get('/package', admin, app.controller.package.list);
+  app.get('/manager/package', admin, app.controller.package.index);
+
+  //平台管理
+  app.post('/platform', admin, app.controller.platform.main);
+  app.get('/platform', admin, app.controller.platform.list);
+  app.get('/manager/platform', admin, app.controller.platform.index);
+  
+  //栏目管理
+  app.post('/column', admin, app.controller.column.main);
+  app.get('/column', admin, app.controller.column.list);
+  app.get('/manager/column', admin, app.controller.column.index);
+  
   //推荐管理
   app.post('/recommand', admin, app.controller.recommand.main);
   app.get('/recommand', admin, app.controller.recommand.list);

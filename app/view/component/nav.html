@@ -55,4 +55,28 @@
 
             <b class="arrow"></b>
         </li>
+        <li class="{% if current =='package' %}active{% endif %}">
+            <a href="/manager/package">
+                <i class="menu-icon fa fa-user"></i>
+                <span class="menu-text"> 套餐管理 </span>
+            </a>
+
+            <b class="arrow"></b>
+        </li>
+        <li class="{% if current =='platform' %}active{% endif %}">
+            <a href="/manager/platform">
+                <i class="menu-icon fa fa-user"></i>
+                <span class="menu-text"> 平台管理 </span>
+            </a>
+
+            <b class="arrow"></b>
+        </li>
+        <li class="{% if current =='column' %}active{% endif %}">
+            <a href="/manager/column">
+                <i class="menu-icon fa fa-user"></i>
+                <span class="menu-text"> 栏目管理 </span>
+            </a>
+
+            <b class="arrow"></b>
+        </li>
     </ul><!-- /.nav-list -->
