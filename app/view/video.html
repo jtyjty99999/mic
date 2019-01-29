@@ -8,7 +8,7 @@
     background:#1fb1f2!important
     }
 .ui-jqdialog{
-    width:700px!important
+    width:1000px!important;
 }
 </style>
 
@@ -326,11 +326,6 @@
         }
     });
 
-    console.log(platformValue);
-    console.log(columnValue);
-    console.log(categoryValue);
-    console.log(99999);
-
     function createFreightEditElement(value, editOptions) {
         console.log(editOptions);
         var div = $("<div style='margin-bottom:5px;margin-top:-10px;'></div>");
@@ -387,7 +382,7 @@
             //'userName': userName,
         },
         height: 400,
-        colNames: ['编号','文件链接','缩略图', '名称', '备注', '类目', '价格', '需求方', '上传人','平台','栏目', '时长', '格式','颗粒度','操作'],
+        colNames: ['编号','文件链接','缩略图', '名称', '类目', '价格', '需求方', '上传人','平台','栏目', '时长', '格式', '备注','颗粒度','操作'],
         edit:{
             closeAfterEdit:true,
         },
@@ -397,15 +392,15 @@
             { name: 'url', index: 'url', hidden: true, width: 150, editable: true, editoptions: { size: "50", maxlength: "1000" },formoptions: {rowpos:1,colpos:1} },
             { name: 'short_image', index: 'short_image', hidden: true, width: 150, editable: true, editoptions: { size: "50", maxlength: "1000" },formoptions: {rowpos:2,colpos:1} },
             { name: 'name', index: 'name', width: 150, editable: true, formatter: "showlink", formatoptions:{baseLinkUrl:"/manager/video/detail",idName: "id"}, editoptions: { size: "20", maxlength: "100" },formoptions: {rowpos:3,colpos:1}},
-            { name: 'description', index: 'description', width: 150, editable: true, editoptions: { size: "20", maxlength: "100" } },
             { name: 'category_id', index: 'category_id', formatter: formatCategory, width: 70, editable: true, edittype: "select", editoptions: { value: categoryValue },formoptions: {rowpos:1,colpos:2} },
-            { name: 'price', index: 'price', width: 150, editable: true, editoptions: { size: "20", maxlength: "20" } },
-            { name: 'business', index: 'business', width: 150, editable: true, editoptions: { size: "20", maxlength: "100" } },
+            { name: 'price', index: 'price', width: 30, editable: true, editoptions: { size: "10", maxlength: "20" },formoptions: {rowpos:5,colpos:2} },
+            { name: 'business', index: 'business', width: 150, editable: true, editoptions: { size: "20", maxlength: "100" },formoptions: {rowpos:4,colpos:1} },
             { name: 'work_id', index: 'work_id', formatter: formatUser, width: 70, editable: true, edittype: "select", editoptions: { value: userValue } },
             { name: 'platform_id', index: 'platform_id', formatter: formatPlatform, width: 70, editable: true, edittype: "select", editoptions: { value: platformValue },formoptions: {rowpos:2,colpos:2} },
             { name: 'column_id', index: 'column_id', formatter: formatColumn, width: 70, editable: true, edittype: "select", editoptions: { value: columnValue },formoptions: {rowpos:3,colpos:2} },
-            { name: 'time', index: 'time', width: 70, editable: true, editoptions: { size: "20", maxlength: "30" } },
-            { name: 'format', index: 'format', width: 60, editable: true, edittype: "select", editoptions: { value: "MP4:MP4;MOV:MOV;WMV:WMV" } },
+            { name: 'time', index: 'time', width: 30, editable: true, editoptions: { size: "10", maxlength: "30" },formoptions: {rowpos:4,colpos:2} },
+            { name: 'format', index: 'format', width: 60, editable: true, edittype: "select", editoptions: { value: "MP4:MP4;MOV:MOV;WMV:WMV" },formoptions: {rowpos:5,colpos:1} },
+            { name: 'description', index: 'description', width: 150, editable: true, editoptions: { size: "20", maxlength: "100" },formoptions: {rowpos:6,colpos:1} },
             { name: 'keystring', index: 'keystring', width: 350, editable: true, edittype:"textarea", editoptions:{rows:"10",cols:"60"},formoptions: {rowspan:2} },
             /*
             { name: 'is_scene', index: 'is_scene', width: 70, hidden: true, editable: true, edittype: "custom",
