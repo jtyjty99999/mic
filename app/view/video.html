@@ -312,7 +312,7 @@
     columns.forEach((d, i) => {
         columnValue += d.id;
         columnValue += ':' + d.name;
-        if (i !== categorys.length - 1) {
+        if (i !== columns.length - 1) {
             columnValue += ';'
         }
     });
@@ -321,10 +321,15 @@
     platforms.forEach((d, i) => {
         platformValue += d.id;
         platformValue += ':' + d.name;
-        if (i !== categorys.length - 1) {
+        if (i !== platforms.length - 1) {
             platformValue += ';'
         }
     });
+
+    console.log(platformValue);
+    console.log(columnValue);
+    console.log(categoryValue);
+    console.log(99999);
 
     function createFreightEditElement(value, editOptions) {
         console.log(editOptions);
