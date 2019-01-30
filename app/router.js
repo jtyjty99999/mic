@@ -21,6 +21,7 @@ module.exports = app => {
   //套餐管理
   app.post('/package', admin, app.controller.package.main);
   app.get('/package', app.controller.package.list);
+  app.get('/package/findVideoByPackageId', app.controller.package.findVideoByPackageId);
   app.get('/manager/package', admin, app.controller.package.index);
 
   //平台管理

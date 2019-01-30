@@ -16,6 +16,17 @@ exports.index = function* () {
 
 };
 
+exports.findVideoByPackageId = function *(){
+  let id = this.query.id;
+  let pkg = yield this.service.package.find(id);
+  let video_ids = pkg.video_ids;
+  video_ids = video_ids.split(',');
+  let res = yield video_ids.map((video_id)=>{
+    return this.service.video.find(Number(video_id));
+  });
+  this.body = res;
+}
+
 // 新增
 
 exports.main = function *(){
