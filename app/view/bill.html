@@ -1,7 +1,12 @@
 {% extends "_layout.html" %}
 
 {% block style %}
+<style>
 
+.ui-jqdialog{
+    width:800px!important;
+}
+</style>
 {% endblock %}
 
 {% block header %}
@@ -37,6 +42,8 @@
 
 <textarea name="" id="categorys" cols="30" rows="10" style="display:none">{{categorys}}</textarea>
 <textarea name="" id="users" cols="30" rows="10" style="display:none">{{users}}</textarea>
+<textarea name="" id="platforms" cols="30" rows="10" style="display:none">{{platforms}}</textarea>
+<textarea name="" id="columns" cols="30" rows="10" style="display:none">{{columns}}</textarea>
 
 {% endblock %}
 
@@ -45,6 +52,9 @@
 <script type="text/javascript">
     window.categorys = JSON.parse($('#categorys').val());
     window.users = JSON.parse($('#users').val());
+    window.platforms = JSON.parse($('#platforms').val());
+    window.columns = JSON.parse($('#columns').val());
+
     var grid_data =
         [
             { id: 1, name: "Desktop Computer", work_id: 1, phone: 111222, status: 0 },
@@ -194,6 +204,15 @@
         console.log(cellValue, categorys.filter((d) => (d.id === cellValue)));
         return categorys.filter((d) => (d.id === cellValue))[0].name
     };
+    function formatPlatform(cellValue, options, rowObject) {
+        console.log(cellValue, platforms.filter((d) => (d.id === cellValue)));
+        return cellValue ? platforms.filter((d) => (d.id === cellValue))[0].name : '';
+    };
+    function formatColumn(cellValue, options, rowObject) {
+        console.log(cellValue, columns.filter((d) => (d.id === cellValue)));
+        return cellValue ? columns.filter((d) => (d.id === cellValue))[0].name : '';
+    };
+
     
     var userValue = '';
     users.forEach((d, i) => {
@@ -209,6 +228,24 @@
         categoryValue += ':' + d.name;
         if (i !== categorys.length - 1) {
             categoryValue += ';'
+        }
+    });
+
+    var columnValue = '';
+    columns.forEach((d, i) => {
+        columnValue += d.id;
+        columnValue += ':' + d.name;
+        if (i !== columns.length - 1) {
+            columnValue += ';'
+        }
+    });
+
+    var platformValue = '';
+    platforms.forEach((d, i) => {
+        platformValue += d.id;
+        platformValue += ':' + d.name;
+        if (i !== platforms.length - 1) {
+            platformValue += ';'
         }
     });
 
@@ -254,23 +291,22 @@
             //'userName': userName,
         },
         height: 400,
-        colNames: ['编号', '订单名称', '商家名称','联系方式', '类目', '订单金额', '对接人', '状态', '时长', '比例', '渠道', '操作'],
+        colNames: ['编号', '商家名称','联系方式', '类目', '订单金额', '对接人', '状态', '平台', '栏目', '用户留言', '操作'],
         jsonReader: {  
             records:"totalRow"
         },
         //{id:6,name:"Desktop cxzczzxc",work_id:"222",phone:4234324,status:0},
         colModel: [
             { name: 'id', index: 'id', width: 60, sorttype: "int", editable: false },
-            { name: 'name', index: 'name', width: 150, editable: true, editoptions: { size: "20", maxlength: "40" } },
-            { name: 'business', index: 'business', width: 150, editable: true, editoptions: { size: "20", maxlength: "40" } },
-            { name: 'phone', index: 'phone', width: 150, editable: true, editoptions: { size: "20", maxlength: "40" } },
-            { name: 'category_id', index: 'category_id', formatter: formatCategory, width: 70, editable: true, edittype: "select", editoptions: { value: categoryValue } },
+            { name: 'business', index: 'business', width: 150, editable: true, editoptions: { size: "20", maxlength: "40" },formoptions: {rowpos:1,colpos:1}},
+            { name: 'phone', index: 'phone', width: 150, editable: true, editoptions: { size: "20", maxlength: "40" },formoptions: {rowpos:2,colpos:1} },
+            { name: 'category_id', index: 'category_id', formatter: formatCategory, width: 70, editable: true, edittype: "select", editoptions: { value: categoryValue },formoptions: {rowpos:1,colpos:2} },
             { name: 'price', index: 'price', width: 150, editable: true, editoptions: { size: "20", maxlength: "40" } },
-            { name: 'work_id', index: 'work_id', formatter: formatUser, width: 100, editable: true, edittype: "select", editoptions: { value: userValue } },
+            { name: 'work_id', index: 'work_id', formatter: formatUser, width: 100, editable: true, edittype: "select", editoptions: { value: userValue },formoptions: {rowpos:3,colpos:1} },
             { name: 'status', index: 'status', width: 150, editable: true, formatter: formatStatus, edittype: "select", editoptions: { value: "0:未沟通;1:进行中;2:已结算;3:作废" } },
-            { name: 'time', index: 'time', width: 150, editable: true, editoptions: { size: "20", maxlength: "40" } },
-            { name: 'scale', index: 'scale', width: 150, editable: true, editoptions: { size: "20", maxlength: "40" } },
-            { name: 'channel', index: 'channel', width: 150, editable: true, editoptions: { size: "20", maxlength: "40" } },
+            { name: 'platform_id', index: 'platform_id', formatter: formatPlatform, width: 70, editable: true, edittype: "select", editoptions: { value: platformValue },formoptions: {rowpos:2,colpos:2} },
+            { name: 'column_id', index: 'column_id', formatter: formatColumn, width: 70, editable: true, edittype: "select", editoptions: { value: columnValue },formoptions: {rowpos:3,colpos:2} },
+            { name: 'comment', comment: 'channel',width: 250, editable: true, edittype:"textarea", editoptions:{rows:"4",cols:"60"} },
             {
                 name: 'myac', index: '', width: 80, fixed: true, sortable: false, resize: false,
                 formatter: 'actions',

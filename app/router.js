@@ -20,17 +20,17 @@ module.exports = app => {
   
   //套餐管理
   app.post('/package', admin, app.controller.package.main);
-  app.get('/package', admin, app.controller.package.list);
+  app.get('/package', app.controller.package.list);
   app.get('/manager/package', admin, app.controller.package.index);
 
   //平台管理
   app.post('/platform', admin, app.controller.platform.main);
-  app.get('/platform', admin, app.controller.platform.list);
+  app.get('/platform', app.controller.platform.list);
   app.get('/manager/platform', admin, app.controller.platform.index);
   
   //栏目管理
   app.post('/column', admin, app.controller.column.main);
-  app.get('/column', admin, app.controller.column.list);
+  app.get('/column', app.controller.column.list);
   app.get('/manager/column', admin, app.controller.column.index);
   
   //推荐管理
