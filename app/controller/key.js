@@ -15,6 +15,28 @@ exports.index = function* () {
 };
 
 
+exports.listAll = function *(){
+    const pageNum = +this.query.page || 1;
+    const pageSize = +this.query.rows || 100;
+    //全查
+    let result = yield this.service.key.list();
+    let total = yield this.service.key.count();
+
+    for(let i = 0; i < result.length; i++){
+      if(result[i].level === 3){
+        result[i].children = yield this.service.keyUnit.listByKeyid(1, 1000, result[i].id)
+      }else{
+        result[i].children = []
+      }
+    }
+
+    this.body = {
+      total: total > pageSize ? (parseInt(total / pageSize) + 1) : 1,
+      rows: result
+    };
+  
+}
+
 exports.main = function *(){
 
     const body = this.request.body;

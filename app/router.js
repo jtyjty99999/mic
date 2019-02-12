@@ -29,6 +29,16 @@ module.exports = app => {
   app.get('/platform', app.controller.platform.list);
   app.get('/manager/platform', admin, app.controller.platform.index);
   
+  //视频功能管理
+  app.post('/usage', admin, app.controller.usage.main);
+  app.get('/usage', app.controller.usage.list);
+  app.get('/manager/usage', admin, app.controller.usage.index);
+  
+  //视频风格管理
+  app.post('/style', admin, app.controller.style.main);
+  app.get('/style', app.controller.style.list);
+  app.get('/manager/style', admin, app.controller.style.index);
+  
   //栏目管理
   app.post('/column', admin, app.controller.column.main);
   app.get('/column', app.controller.column.list);
@@ -66,6 +76,7 @@ module.exports = app => {
   //颗粒度管理
   app.post('/key', admin, app.controller.key.main);
   app.get('/key', admin, app.controller.key.list);
+  app.get('/key/listall', admin, app.controller.key.listAll);
   app.get('/manager/key', admin, app.controller.key.index);
 
 

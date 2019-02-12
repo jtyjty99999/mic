@@ -30,6 +30,8 @@ exports.upload = function* () {
   let categorys = yield this.service.category.list();
   let platforms = yield this.service.platform.list();
   let columns = yield this.service.column.list();
+  let styles = yield this.service.styles.list();
+  let usages = yield this.service.usages.list();
   categorys = categorys.filter((d) => { return d.level === 1 });
 
   for(let i = 0, l = rows.length;i< l; i++){
@@ -57,6 +59,12 @@ exports.upload = function* () {
       })[0].id || 1,
       column_id:columns.filter((column)=>{
         return column.name === d[15]
+      })[0].id || 1,
+      usage_id:usages.filter((usage)=>{
+        return usage.name === d[16]
+      })[0].id || 1,
+      style_id:styles.filter((style)=>{
+        return style.name === d[17]
       })[0].id || 1,
       keystring:d[16]
     });
@@ -87,6 +95,8 @@ exports.upload = function* () {
 exports.index = function* () {
   let categorys = yield this.service.category.list();
   let platforms = yield this.service.platform.list();
+  let usages = yield this.service.usage.list();
+  let styles = yield this.service.style.list();
   let columns = yield this.service.column.list();
   categorys = categorys.filter((d) => { return d.level === 1 });
   let users = yield this.service.people.listAll()
@@ -95,6 +105,8 @@ exports.index = function* () {
     columns: JSON.stringify(columns),
     categorys: JSON.stringify(categorys),
     platforms: JSON.stringify(platforms),
+    styles: JSON.stringify(styles),
+    usages: JSON.stringify(usages),
     title: "视频库",
     users: JSON.stringify(users)
   });
@@ -141,6 +153,8 @@ exports.main = function* () {
   const description = body.description;
   const category_id = body.category_id;
   const platform_id = body.platform_id;
+  const usage_id = body.usage_id;
+  const style_id = body.style_id;
   const column_id = body.column_id;
   const keystring = body.keystring;
   const price = body.price;
@@ -178,7 +192,9 @@ exports.main = function* () {
       short_image,
       platform_id,
       column_id,
-      keystring
+      keystring,
+      style_id,
+      usage_id
     });
 
     yield this.service.workerLog.insert({
@@ -211,7 +227,9 @@ exports.main = function* () {
       short_image,
       platform_id,
       column_id,
-      keystring
+      keystring,
+      style_id,
+      usage_id
     });
 
     yield this.service.workerLog.insert({
