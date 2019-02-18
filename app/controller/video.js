@@ -290,6 +290,43 @@ exports.list = function* () {
   };
 }
 
+exports.listByUsage = function* () {
+  const pageNum = +this.query.page || 1;
+  const pageSize = +this.query.rows || 100;
+  const usage_id = this.query.usage_id;
+  const sql = `usage_id = ${usage_id}`
+
+  let result, total;
+  result = yield this.service.video.search(pageNum, pageSize, sql);
+  total = yield this.service.video.count();
+
+  this.body = {
+    total: total % pageSize,
+    rows: result,
+    pageNum,
+    pageSize
+  };
+}
+
+
+exports.listByStyle = function* () {
+  const pageNum = +this.query.page || 1;
+  const pageSize = +this.query.rows || 100;
+  const style_id = this.query.style_id;
+  const sql = `style_id = ${style_id}`
+
+  let result, total;
+  result = yield this.service.video.search(pageNum, pageSize, sql);
+  total = yield this.service.video.count();
+
+  this.body = {
+    total: total % pageSize,
+    rows: result,
+    pageNum,
+    pageSize
+  };
+}
+
 exports.listByCategory = function* () {
   const pageNum = +this.query.page || 1;
   const pageSize = +this.query.rows || 100;

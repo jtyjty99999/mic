@@ -11,7 +11,6 @@ exports.sendMail = function(title, text, cb){
             pass: 'helloworld1234'
         }
     });
-    
     const mailOptions = {
         from: 'qmx_alert@163.com ', // sender address
         //to: 'jtyjty99999@126.com', // list of receivers

@@ -56,6 +56,8 @@ module.exports = app => {
   app.post('/video', admin, app.controller.video.main);
   app.get('/video', admin, app.controller.video.list);
   app.get('/video/listByCategory', app.controller.video.listByCategory);
+  app.get('/video/listByUsage', app.controller.video.listByUsage);
+  app.get('/video/listByStyle', app.controller.video.listByStyle);
   app.get('/video/listByHot', app.controller.video.listByHot);
   app.get('/video/listByRecommand', app.controller.video.listByRecommand);
   app.get('/video/searchByKeyword', app.controller.video.searchByKeyword);
