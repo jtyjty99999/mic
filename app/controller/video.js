@@ -290,6 +290,25 @@ exports.list = function* () {
   };
 }
 
+
+exports.listByColumn = function* () {
+  const pageNum = +this.query.page || 1;
+  const pageSize = +this.query.rows || 100;
+  const column_id = this.query.column_id;
+  const sql = `column_id = ${column_id}`
+
+  let result, total;
+  result = yield this.service.video.search(pageNum, pageSize, sql);
+  total = yield this.service.video.count();
+
+  this.body = {
+    total: total % pageSize,
+    rows: result,
+    pageNum,
+    pageSize
+  };
+}
+
 exports.listByUsage = function* () {
   const pageNum = +this.query.page || 1;
   const pageSize = +this.query.rows || 100;

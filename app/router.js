@@ -42,6 +42,7 @@ module.exports = app => {
   //栏目管理
   app.post('/column', admin, app.controller.column.main);
   app.get('/column', app.controller.column.list);
+  app.get('/column/listall', app.controller.column.listAll);
   app.get('/manager/column', admin, app.controller.column.index);
   
   //推荐管理
@@ -55,6 +56,7 @@ module.exports = app => {
   
   app.post('/video', admin, app.controller.video.main);
   app.get('/video', admin, app.controller.video.list);
+  app.get('/video/listByColumn', app.controller.video.listByColumn);
   app.get('/video/listByCategory', app.controller.video.listByCategory);
   app.get('/video/listByUsage', app.controller.video.listByUsage);
   app.get('/video/listByStyle', app.controller.video.listByStyle);

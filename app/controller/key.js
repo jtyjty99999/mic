@@ -34,7 +34,6 @@ exports.listAll = function *(){
       total: total > pageSize ? (parseInt(total / pageSize) + 1) : 1,
       rows: result
     };
-  
 }
 
 exports.main = function *(){

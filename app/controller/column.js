@@ -111,3 +111,24 @@ exports.list = function* () {
     totalRow:total,
   };
 }
+
+
+
+exports.listAll = function *(){
+  const pageNum = +this.query.page || 1;
+  const pageSize = +this.query.rows || 100;
+  //全查
+  let result = yield this.service.platform.list();
+
+  const r = {};
+
+  for(let i = 0; i < result.length; i++){
+    let child = yield this.service.column.listByPlatformId(1, 1000, result[i].id);
+    r[result[i].name] = [];
+    child.forEach((c)=>{
+      r[result[i].name].push(c)
+    });
+  }
+
+  this.body = r
+}

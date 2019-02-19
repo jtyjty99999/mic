@@ -20,6 +20,12 @@ module.exports = app => {
       return articles;
     }
 
+    // 通过 获取id
+    * listByPlatformId(pageNum, pageSize, platform_id) {
+      const articles = yield app.mysql.query('select * from video_column where platform_id = ? order by timestamp desc limit ? offset ?;', [ platform_id, pageSize, (pageNum - 1) * pageSize ]);
+      return articles;
+    }
+
     // 获取某条信息
     * find(id) {
       const article = yield app.mysql.get('video_platform', { id });
