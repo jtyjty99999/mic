@@ -259,6 +259,39 @@ exports.main = function* () {
 
 }
 
+
+exports.listByFilter = function* () {
+  const pageNum = +this.query.page || 1;
+  const pageSize = +this.query.rows || 100;
+  let sql = '';
+
+  const querys = ['category_id', 'usage_id', 'platform_id', 'column_id'];
+
+  for(let key in this.query){
+    if(querys.indexOf(key)!==-1){
+      sql += ' ' + key + '=' + this.query[key];
+      sql += ' and';
+    }
+  }
+  sql = sql.substring(0, sql.length-3);
+  console.log(sql);
+
+  let result, total;
+
+  result = yield this.service.video.search(pageNum, pageSize, sql);
+  total = yield this.service.video.count(sql);
+  
+  function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms))
+  }
+  this.body = {
+    total: parseInt(total / pageSize) + 1,
+    rows: result,
+    totalRow:total,
+  };
+}
+
+
 exports.list = function* () {
   const pageNum = +this.query.page || 1;
   const pageSize = +this.query.rows || 100;

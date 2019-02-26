@@ -62,6 +62,8 @@ module.exports = app => {
   app.get('/video/listByStyle', app.controller.video.listByStyle);
   app.get('/video/listByHot', app.controller.video.listByHot);
   app.get('/video/listByRecommand', app.controller.video.listByRecommand);
+  app.get('/video/listByFilter', app.controller.video.listByFilter);
+  
   app.get('/video/searchByKeyword', app.controller.video.searchByKeyword);
   app.get('/video/detail', app.controller.video.getDetail);
   app.get('/manager/video', admin, app.controller.video.index);
