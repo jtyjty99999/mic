@@ -273,7 +273,12 @@ exports.listByFilter = function* () {
       sql += ' and';
     }
   }
-  sql = sql.substring(0, sql.length-3);
+  if(sql == ''){
+    sql = '1=1'
+  }else{
+    sql = sql.substring(0, sql.length-3);
+  }
+  
   console.log(sql);
 
   let result, total;
