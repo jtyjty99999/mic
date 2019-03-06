@@ -39,7 +39,7 @@
 		<div class="entrance-bottom">
 			<h4 class="record-title">请输入你的托福真考成绩总分数，帮助我们直接了解你的能力，以推荐更合适的课程。</h4>
 			<h3>托福总分</h3>
-			<input type="text" placeholder="请输入托福总分">
+			<input type="text" placeholder="请输入托福总分" id="toelf-score">
 			<button class="next-button button" id="record-next">下一步</button>
 		</div>
 	</div>
@@ -195,19 +195,22 @@
 
 		$(document).delegate('#record-submit', 'click', function () {
 			let score = {
-				whole:50,
-				read:15,
-				write:15,
-				listen:15,
-				speak:15
+				wholeScore:window.toelfScore,
+				read:picker2.value[0],
+				write:picker2.value[1],
+				listen:picker2.value[2],
+				speak:picker2.value[3]
 			}
 			let data = countToelf(score);
 			navigate('#landing-detail');
+			console.log(data);
 			renderToeflScoreTemplate(data);
 		});
 
 		$(document).delegate('#record-next', 'click', function () {
 			navigate('#record', function () {
+				window.toelfScore = $('#toelf-score').val();
+				$('#record-whole').text(window.toelfScore);
 
 				var arr2 = new Array();
 				for (var i = 1; i < 26; i++) {
@@ -220,7 +223,7 @@
 					};
 				});
 
-				let picker2 = new WheelPicker({
+				window.picker2 = new WheelPicker({
 					el: "#trigger",
 					data: [record, record, record, record],
 					value: [15, 15, 15, 15],
@@ -238,7 +241,7 @@
 				// 词汇语法之后，判断分数，再进入阅读理解
 				new Toelf(data1, function (score) {
 					// 比较差
-					if (score.match + score.single < 1.5) {
+					if (score.match < 6 || score.single < 6) {
 
 						let data = count(score);
 						data.rank = 0;
@@ -299,18 +302,8 @@
 			//navigate('#question');
 
 			//主入口
-			// navigate('#home');
+			navigate('#home');
 			
-			let score = {
-				wholeScore:50,
-				read:15,
-				write:15,
-				listen:15,
-				speak:15
-			}
-			let data = countToelf(score);
-			navigate('#landing-detail');
-			renderToeflScoreTemplate(data);
 
 			/*
 			let d = {

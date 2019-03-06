@@ -740,7 +740,7 @@ display: block
     color:rgba(255,255,255,1);
     line-height:0.8rem;
     background:rgba(59, 157, 255, 1);
-    
+    text-indent: 1.2rem;
 }
 
 .call-button::before{
