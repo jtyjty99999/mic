@@ -120,7 +120,7 @@ exports.listAll = function *(){
   //全查
   let result = yield this.service.platform.list();
 
-  const r = {};
+  const r = {"全部":[]};
 
   for(let i = 0; i < result.length; i++){
     let child = yield this.service.column.listByPlatformId(1, 1000, result[i].id);
