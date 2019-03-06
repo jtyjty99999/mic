@@ -126,7 +126,11 @@ exports.listAll = function *(){
     let child = yield this.service.column.listByPlatformId(1, 1000, result[i].id);
     r[result[i].name] = [];
     child.forEach((c)=>{
-      r[result[i].name].push(c)
+      r[result[i].name].push(c);
+    });
+    r[result[i].name].push({
+      "name":"全部",
+      id:0
     });
   }
 

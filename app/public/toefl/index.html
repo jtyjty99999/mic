@@ -194,8 +194,16 @@
 		});
 
 		$(document).delegate('#record-submit', 'click', function () {
-			//let data = count(score);
+			let score = {
+				whole:50,
+				read:15,
+				write:15,
+				listen:15,
+				speak:15
+			}
+			let data = countToelf(score);
 			navigate('#landing-detail');
+			renderToeflScoreTemplate(data);
 		});
 
 		$(document).delegate('#record-next', 'click', function () {
@@ -229,8 +237,6 @@
 			navigate('#question', function () {
 				// 词汇语法之后，判断分数，再进入阅读理解
 				new Toelf(data1, function (score) {
-					console.log(score);
-					console.log(99999);
 					// 比较差
 					if (score.match + score.single < 1.5) {
 
@@ -293,7 +299,19 @@
 			//navigate('#question');
 
 			//主入口
-			navigate('#home');
+			// navigate('#home');
+			
+			let score = {
+				wholeScore:50,
+				read:15,
+				write:15,
+				listen:15,
+				speak:15
+			}
+			let data = countToelf(score);
+			navigate('#landing-detail');
+			renderToeflScoreTemplate(data);
+
 			/*
 			let d = {
 				"wordForRecommand": "根据新课堂结合多年教学经验和本次测评结果评估出你比较擅长英语语法。在单词量的积累上仍旧需要提高，希望你在平时的学习中多注意单词量的积累。暂时没有合适的班级推荐，请咨询新课堂留学顾问帮助你制定课程。",

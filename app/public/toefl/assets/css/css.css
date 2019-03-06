@@ -792,10 +792,44 @@ display: block
     height:1.95rem;
     font-size:0.28rem;
     font-family:PingFang-SC-Regular;
-    font-weight:300;
+    font-weight:400;
     color:rgba(58,58,58,1);
     line-height:0.42rem;
 }
+.card-toefl-box{
+    text-align: center;
+
+}
+.card .card-toefl-box h4{
+    border-left: none;
+}
+.card .card-toefl-box .toefl-score{
+    font-size: 0.4rem;
+    margin-bottom:0.3rem
+}
+.card-toefl-list-box{
+    margin-bottom: 0.4rem;
+}
+
+
+.card .card-toefl-box li{
+    display: inline-block;
+    width: 22%;
+}
+.card .card-toefl-box h4.score{
+    font-size:0.72rem;
+    font-family:SanFranciscoDisplay-Semibold;
+    font-weight:600;
+    color:rgba(59,157,255,1);
+}
+.card .card-toefl-box h4.score-title{
+    font-size:0.36rem;
+    margin-bottom: 0.2rem;
+}
+
+
+
+
 
 .card h3{
     height:0.42rem;
@@ -838,8 +872,8 @@ display: block
 }
 .card li .comment{
     font-size:0.28rem;
-    font-family:PingFang-SC-Medium;
-    font-weight:lighter;
+    font-family:PingFang-SC-Regular;
+    font-weight: 300;
     color:rgba(58,58,58,1);
     line-height:0.42rem;
 }

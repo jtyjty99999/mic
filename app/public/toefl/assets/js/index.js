@@ -940,6 +940,101 @@ ToelfAdvance.prototype.activeQuestion = function(index){
 }*/
 
 
+function countToelf(score){
+
+	/*
+	
+		{
+			wholeScore:30,
+			listen: 15,
+			read:15,
+			speak:15,
+			write:15
+		}
+	*/
+	let wholeScore = score.wholeScore || 0;
+
+	let percent = '0%';
+	if(wholeScore >=100){
+		percent = '90%';
+		wordForRecommand = '你已经取得了一个非常可观的托福分数，但是再往上提升需要更高阶段的托福系统学习，建议可以查漏补缺，回归到基础知识的夯实，生僻题目的解题方法，加油！欢迎咨询小客服获得最适合你的学习规划建议哦～';
+	}else if(wholeScore >=81){
+		percent = '85%%';
+		wordForRecommand = '你的托福分数在中等水平以上，建议系统化四科课程的干货知识学习以及托福考点技巧等的运用，加油！';
+	}else if(wholeScore >=61){
+		percent = '75%';
+		wordForRecommand = '你的托福分数达到了一般人的平均水平。在各个学科方面，建议加强基础层面的训练，从而获得信息的整合能力，对考点的预判能力。建议你开始进行托福强化学习，加油！';
+	}else if(wholeScore >=41){
+		percent = '40%';
+		wordForRecommand = '你的英语能力达到了托福学习的基础要求，但是距离托福高分很远的距离。建议你开始进行系统化的托福学习，加油！';
+	}else if(wholeScore >0){
+		percent = '30%';
+		wordForRecommand = '你的英语能力与托福高分有较大的差距，建议你可以花更多时间在基础能力提升上.';
+	}else{
+		percent = '0%';
+		wordForRecommand = '未填写托福分数哦！';
+	}
+	
+	let readAb = score.read || 0;
+	let writeAb = score.write || 0;
+	let listenAb = score.listen || 0;
+	let speakAb = score.speak || 0;
+
+	let readText, writeText, listenText, speakText;
+
+	if(readAb >= 22){
+		readText = '你具有广泛的阅读能力，一般能够理解较难文本的英语学术文章，掌握了大量的学术词汇和良好的语法结构';
+	}else if(readAb >= 15){
+		readText = '你通常都能理解学术英语的文章，但是在理解的某些部分文本有局限性：在理解高层次上的复杂词汇仍有一定的困难';
+	}else{
+		readText = '你的阅读能力非常有限，亟待提升，你只能理解文章中部分信息：你对较不常见词汇的理解不一致，理解和连接信息的能力有限';
+	}
+
+	if(writeAb >= 22){
+		writeText = '你能够很好得结合演讲和阅读回答问题，但对一些要点的总结有些不准确，或在口语的表达上有时不符合语法或不清楚。';
+	}else if(writeAb >= 15){
+		writeText = '你能够把讲课内容和阅读材料联系起来，但你的一个或多个重要的想法可能缺失、不清晰或不准确;可能不清楚讲座和阅读文章之间的关系;';
+	}else{
+		writeText = '你未能理解演讲内容和阅读文章;讲座与阅读文章的联系不足;或许有多语法错误和非常不清楚的表达和句子结构';
+	}
+	
+	if(listenAb >= 22){
+		listenText = '你具有广泛的听力能力，包括能够听懂复杂的词汇和文章结构：你能够理解文章中不管是隐含的还是陈述的主要观点和重要细节,区分重要的和次要的信息';
+	}else if(listenAb >= 15){
+		listenText = '你通常都能听懂英语对话和讲座，但是可能难以理解主要思想或不重要的细节；你能综合演讲或对话中相邻部分的信息，但可能难以从不同的部分综合信息演讲或对话内容';
+	}else{
+		listenText = '你能够理解文章的主旨和主要细节信息，但在理解涉及抽象或复杂概念的英语演讲和对话以及识别这些概念之间的关系方面存在困难';
+	}
+	
+	if(speakAb >= 22){
+		speakText = '你有能力用英语有效地交流你的个人经历和观点。总的来说，你的演讲清晰流畅。你对词汇和语法的运用是有效的，只有很小的错误。';
+	}else if(speakAb >= 15){
+		speakText = '你能用英语表达你的个人经历和观点，而且大多清晰连贯。你的发言很清楚，只是偶尔有错误。语法和词汇有一定的局限性，并包含一些错误。';
+	}else{
+		speakText = '你能够用英语讲述日常经历和观点方面有些困难。听众有时会因为发音、语法和词汇方面的明显问题而难以理解。';
+	}
+	let rank;
+	if(true){
+		rank = 1;
+	}else{
+		rank = 0;
+	}
+	return {
+		rank,
+		wholeScore,
+		speakAb,
+		writeAb,
+		readAb,
+		listenAb,
+		speakText,
+		writeText,
+		readText,
+		listenText,
+		percent,
+		wordForRecommand
+	}	
+}
+
 
 function count(score){
 
@@ -973,11 +1068,37 @@ function count(score){
 		score.listen = 0;
 	}
 
-	//计算toelf分数
+	let wholeScore = score.match + score.single + score.read + score.listen;
+	let percent;
 
-	let toelfScore = 30 * (score.match/10) + 30 * (score.single/10) + 30 * (score.read/5) + 30 * (score.listen/5) 
-
-	let percent = '90%';
+	let wordForRecommand = '你的英语能力相当的扎实，建议可以加强托福的系统化学习，争取早日解决托福，加油！欢迎咨询小客服获得最适合你的学习规划建议哦～';
+	let toelfScore = '0'
+	if(wholeScore >=28.5){
+		percent = '90%';
+		toelfScore = '60+';
+		wordForRecommand = '你的英语能力相当的扎实，建议可以加强托福的系统化学习，争取早日解决托福，加油！欢迎咨询小客服获得最适合你的学习规划建议哦～';
+	}else if(wholeScore >=25){
+		percent = '70%';
+		toelfScore = '55+';
+		wordForRecommand = '你的英语基础已经达到了托福学习的基本要求，但是不论在词汇、语法、听力、阅读都有一定的欠缺。建议你早日开始托福的基础学习，从而夯实高分基础，加油！欢迎咨询小客服获得最适合你的学习规划建议哦～';
+	}else if(wholeScore >=20){
+		percent = '56%';
+		toelfScore = '50+';
+		wordForRecommand = '你的英语能力达到了托福初学者的平均水平。在各个学科方面，建议加强基础层面的训练，从而获得信息的整合能力，对考点的预判能力。建议你开始进行系统化的托福学习，加油！欢迎咨询小客服获得最适合你的学习规划建议哦～';
+	}else if(wholeScore >=15){
+		percent = '40%';
+		toelfScore = '45+';
+		wordForRecommand = '你的英语能力达到了托福学习的基础要求，但是距离托福高分很远的距离。建议你可以加强托福基础的学习，基础层面能力是获得高分的关键。欢迎咨询小客服获得最适合你的学习规划建议哦～';
+	}else if(wholeScore >=1){
+		percent = '30%';
+		toelfScore = '40+';
+		wordForRecommand = '你的英语能力与托福高分有较大的差距，建议你可以花更多时间在基础能力提升上。欢迎咨询小客服获得最适合你的学习规划建议哦～';
+	}else{
+		percent = '0%';
+		toelfScore = '0+';
+		wordForRecommand = '没有完成测试老师不能给你评语哦～';
+	}
+	
 
 	// 计算能力值
 
@@ -1034,8 +1155,7 @@ function count(score){
 		listenText = '从测试结果来看，你并不能很好的理解听力材料并回答问题。一方面是因为你不熟悉托福的考试形式，另一方面也是因为基础听力能力需要训练，建议你现在就要开始训练听力能力并补充听力学科背景只是。';
 	}
 
-	let wordForRecommand = '根据新课堂结合多年教学经验和本次测评结果评估出你比较擅长英语语法。在单词量的积累上仍旧需要提高，希望你在平时的学习中多注意单词量的积累。暂时没有合适的班级推荐，请咨询新课堂留学顾问帮助你制定课程。';
-
+	
 	// 评分等级
 	let rank;
 	if(true){
@@ -1099,10 +1219,109 @@ function renderScoreTemplate(data){
 
 		<h3>名师点评</h3>
 		<ul>
-			<li> 词汇: <span class="comment"></span> {{wordText}}</li>
-			<li> 语法: <span class="comment"></span> {{graText}}</li>
-			<li> 阅读: <span class="comment"></span> {{readText}}</li>
-			<li> 听力: <span class="comment"></span> {{listenText}}</li>
+			<li> 词汇: <span class="comment">{{wordText}}</span> </li>
+			<li> 语法: <span class="comment">{{graText}}</span> </li>
+			<li> 阅读: <span class="comment">{{readText}}</span> </li>
+			<li> 听力: <span class="comment">{{listenText}}</span> </li>
+		</ul>
+
+	</div>
+
+	{% if rank === 1 %}
+
+	<div class="card-title card-title2"></div>
+	<div class="card">
+
+		<div class="class-recommand">
+			<div class="class-img">
+			</div>
+			<div class="class-title-box">
+					<span class="class-title class-title1">托福</span>
+					<span class="class-title class-title2">托福高分突破特训</span>
+					<span class="class-title class-title3">1888币</span>
+			</div>
+			<div class="class-title-box">
+					<span class="class-title class-title4">开课时间：2018.09.15 13:00</span>
+					<span class="class-title class-title5">80课时</span>
+			</div>
+
+
+		</div>
+		<span class="card-longtext">
+				你的备考计划已经生成！我们将为你发送详细的报告并有机会领取一次免费1对1备考指导。通过以下方式获取。
+		</span>
+		<h3>方式一、电话预约</h3>
+		<input type="text" placeholder="输入电话领取详细报告和备考指导">  <button class="send">发送</button>
+		<h3>方式二、添加老师微信</h3>
+		<h4>如有任何问题，欢迎致电咨询或咨询顾问</h4>
+		<button class="action-button teacher-button">咨询顾问</button>
+		<button class="action-button call-button">拨打电话</button>
+	</div>
+
+	{% endif %}
+
+
+	{% if rank === 0 %}
+
+		<div class="card-title card-title3"></div>
+		<div class="card">
+				<span class="card-longtext">
+						你的备考计划已经生成！我们将为你发送详细的报告并有机会领取一次免费1对1备考指导。通过以下方式获取。
+				</span>
+				<h3>方式一、电话预约</h3>
+				<input type="text" placeholder="输入电话领取详细报告和备考指导">  <button class="send">发送</button>
+				<h3>方式二、添加老师微信</h3>
+				<h4>如有任何问题，欢迎致电咨询或咨询顾问</h4>
+				<button class="action-button teacher-button">咨询顾问</button>
+				<button class="action-button call-button">拨打电话</button>
+		</div>
+	{% endif %}
+
+
+</div>`
+
+
+let html = nunjucks.renderString(template, data);
+	$('#landing-detail').html(html);
+}
+
+
+
+function renderToeflScoreTemplate(data){
+
+	let template = `<div class="entrance-bottom">
+				
+	<div class="card">
+		<div class="card-toefl-box">
+			<h4 class="toefl-score">真考成绩总分{{wholeScore}}分</h4>
+
+			<div>
+				<ul class="card-toelf-list-box">
+					<li><h4 class="score-title">听力</h4> <h4 class="score">{{listenAb}}</h4></li>
+					<li><h4 class="score-title">阅读</h4> <h4 class="score">{{readAb}}</h4></li>
+					<li><h4 class="score-title">口语</h4> <h4 class="score">{{speakAb}}</h4></li>
+					<li><h4 class="score-title">写作</h4> <h4 class="score">{{writeAb}}</h4></li>
+				</ul>
+			</div>
+
+			<span class="card-prefix">
+					你超过了{{percent}}的测评者！
+			</span>
+		</div>
+	</div>
+	<div class="card-title card-title1"></div>
+	<div class="card">
+
+		<span class="card-longtext">
+				{{wordForRecommand}}
+		</span>
+
+		<h3>名师点评</h3>
+		<ul>
+			<li> 写作: <span class="comment">{{writeText}}</span> </li>
+			<li> 口语: <span class="comment">{{speakText}}</span> </li>
+			<li> 阅读: <span class="comment">{{readText}}</span> </li>
+			<li> 听力: <span class="comment">{{listenText}}</span> </li>
 		</ul>
 
 	</div>
