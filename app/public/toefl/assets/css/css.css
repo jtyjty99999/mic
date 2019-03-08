@@ -21,6 +21,9 @@ line-height:0.51rem;
 margin: 0.67rem auto 0;
 width:90%;
 }
+.underline{
+    text-decoration: underline 
+}
 
 #record-in, #home{
     background: url('../img/bgt.png');

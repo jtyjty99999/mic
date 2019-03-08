@@ -624,7 +624,7 @@ Toelf.prototype.renderAll = function(){
 	this.box.html(html);
 	let that = this;
 
-	$('.entrance-bottom-frame-line-button').on('click', function(){
+	$(document).delegate('.entrance-bottom-frame-line-button','click', function(){
 		let $this = $(this);
 		$(this).addClass('active').siblings().removeClass('active');
 		that.answer($this.attr('data-type'), Number($this.attr('data-score')));
@@ -634,11 +634,20 @@ Toelf.prototype.renderAll = function(){
 }
 
 Toelf.prototype.activeQuestion = function(index){
-	this.box.find('.entrance-bottom-frame-line').eq(index-1).addClass('active').siblings().removeClass('active');
+	let qu = this.box.find('.entrance-bottom-frame-line').eq(index-1);
+	qu.addClass('active').siblings().removeClass('active');
 	this.box.css('marginLeft',-(this.index-1)*100 + "%");
 	
 	document.querySelector("#question .topic-frameli").innerHTML = "<div>" + index + "</div>" + "/" + this.whole;
 	$('.process-top').css('width', index * 100 / this.whole + '%' );
+	let highlight = this.questions[index-1].highlight;
+	if(highlight){
+		let replace = qu.html().replace(highlight,"<span class=\"underline\">"+highlight+"</span>");
+		qu.html(replace);
+		//qu.html(qu.html().replace(highlight,"<h3>"+highlight+"</h3>"))
+	}
+	//console.log(qu.html().replace(highlight,"<h3>"+highlight+"</h3>"));
+	console.log(99999);
 }
 
 function ToelfAdvance(questions,score, after){
@@ -1158,7 +1167,7 @@ function count(score){
 	
 	// 评分等级
 	let rank;
-	if(true){
+	if(score.rank){
 		rank = 1;
 	}else{
 		rank = 0;
@@ -1213,16 +1222,20 @@ function renderScoreTemplate(data){
 		<ul>
 			<li> 词汇 <span class="process"></span> {{wordAb}}</li>
 			<li> 语法 <span class="process"></span>  {{graAb}}</li>
+			{% if rank === 1 %}
 			<li> 阅读 <span class="process"></span>  {{readAb}}</li>
 			<li> 听力 <span class="process"></span>  {{listenAb}}</li>
+			{% endif %}
 		</ul>
 
 		<h3>名师点评</h3>
 		<ul>
 			<li> 词汇: <span class="comment">{{wordText}}</span> </li>
 			<li> 语法: <span class="comment">{{graText}}</span> </li>
+			{% if rank === 1 %}
 			<li> 阅读: <span class="comment">{{readText}}</span> </li>
 			<li> 听力: <span class="comment">{{listenText}}</span> </li>
+			{% endif %}
 		</ul>
 
 	</div>
