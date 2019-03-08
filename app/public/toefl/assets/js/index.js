@@ -1285,6 +1285,7 @@ function renderScoreTemplate(data){
 				<h3>方式一、电话预约</h3>
 				<input type="text" placeholder="输入电话领取详细报告和备考指导">  <button class="send">发送</button>
 				<h3>方式二、添加老师微信</h3>
+				<img src="/assets/img/wechat.png">
 				<h4>如有任何问题，欢迎致电咨询或咨询顾问</h4>
 				<button class="action-button teacher-button">咨询顾问</button>
 				<a class="action-button call-button" href="tel:18248466889">拨打电话</a>
