@@ -243,7 +243,7 @@ var data1 =[{
 	"id" : "1",  
 	"title": "The flag is risen each morning over government buildings in Washington.",  
 	"type":"single",
-	"score":0.5,
+	"score":1,
 	"options":[
 					{"name":"The flag is risen each morning over government buildings in Washington."},
 					{"name":"Each morning the flag is rising over government buildings in Washington."},
@@ -257,7 +257,7 @@ var data1 =[{
 	"title": "Scientists predict technological changes in the next century, they will be as dramatic as was the development of the transcontinental railroad in the last century.",  
 	"highlight": "century, they will be as dramatic as was", 
 	"type":"single",
-	"score":0.5,
+	"score":1,
 	"options":[
 	   {"name":"century, they will be as dramatic as was"},
 	   {"name":"century, these will be as dramatic as"},
@@ -270,7 +270,7 @@ var data1 =[{
 	"title": "Whether the ancient Egyptians actually sailed or did not to South America remains uncertain, but Heyerdahl's Ra II expedition demonstrated that they could have done so.",  
 	"type":"single",
 	"highlight":"Whether the ancient Egyptians actually sailed or did not",
-	"score":0.5,
+	"score":1,
 	"options":[
 	   {"name":"Whether the ancient Egyptians actually sailed or did not"},
 	   {"name":"Whether in actuality the ancient Egyptians sailed or did not"},
@@ -283,7 +283,7 @@ var data1 =[{
 	"title": "It is a myth that mathematicians are so absorbed with abstractions and thus have no practical interests.",  
 	"type":"single",
 	"highlight":"It is a myth that mathematicians are so absorbed with abstractions and thus",
-	"score":0.5,
+	"score":1,
 	"options":[
 	   {"name":"It is a myth that mathematicians are so absorbed with abstractions and thus"},
 	   {"name":"It is a myth that mathematicians are absorbed by abstractions and therefore"},
@@ -296,7 +296,7 @@ var data1 =[{
 	"title": "The origins of the Teapot Dome scandal can be traced to the presidency of Theodore Roosevelt, William Howard Taft, and Woodrow Wilson.",  
 	"type":"single",
 	"highlight":"can be traced to the presidency of ",
-	"score":0.5,
+	"score":1,
 	"options":[
 	   {"name":"can be traced to the presidency of"},
 	   {"name":"can be traced to the presidencies of"},
@@ -309,7 +309,7 @@ var data1 =[{
    "title": "An expedition was sent in 1949 to check a Turkish villager's reporting he had seen the remains of Noah's ark on Mount Ararat.",  
    "type":"single",
    "highlight":"a Turkish villager's reporting",
-   "score":0.5,
+   "score":1,
    "options":[
 	  {"name":"a Turkish villager's reporting"},
 	  {"name":"the report of a Turkish villager that"},
@@ -322,7 +322,7 @@ var data1 =[{
 "title": "Until being widely hunted for its ivory and blubber the eighteenth century, walruses were plentiful in the waters of the northeastern United States.",  
 "type":"single",
 "highlight":"Until being widely hunted for its",
-"score":0.5,
+"score":1,
 "options":[
   {"name":"Until being widely hunted for its"},
   {"name":"Being having been widely hunted for its"},
@@ -335,7 +335,7 @@ var data1 =[{
 "title": "The Women's Media Group recently launching an intern program in an effort to encourage minority women to think about careers in publishing and electronic media.",  
 "type":"single",
 "highlight":"The Women's Media Group recently launching an intern program",
-"score":0.5,
+"score":1,
 "options":[
 {"name":"The Women's Media Group recently launching an intern program"},
 {"name":"The Women's Media Group recently would launch an intern program"},
@@ -348,7 +348,7 @@ var data1 =[{
 "title": "There is many challenges associated with starting one's own business.",  
 "type":"single",
 "highlight":"is many challenges associated",
-"score":0.5,
+"score":1,
 "options":[
 {"name":"is many challenges associated"},
 {"name":"is many challenges to associate"},
@@ -361,7 +361,7 @@ var data1 =[{
 "title": "For as many as twenty years and more Joseph Conrad lived the life of a sailor.",  
 "type":"single",
 "highlight":"For as many as twenty years and more",
-"score":0.5,
+"score":1,
 "options":[
 {"name":"For not much more than about twenty years"},
 {"name":"For a little over twenty years and more"},
