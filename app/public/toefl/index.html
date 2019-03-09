@@ -278,6 +278,7 @@
 												name: '查看报告',
 												callback: function () {
 													let data = count(score);
+													data.rank = 1;
 													console.log(JSON.stringify(data));
 													navigate('#landing-detail');
 													renderScoreTemplate(data)
@@ -344,8 +345,8 @@
 												content: '恭喜完成能力测试，前往查看能力报告',
 											});
 											
-										});*/
-
+										});
+*/
 			//navigate('#question2');
 
 			//新手

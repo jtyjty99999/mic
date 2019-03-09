@@ -624,7 +624,7 @@ Toelf.prototype.renderAll = function(){
 	this.box.html(html);
 	let that = this;
 
-	$(document).delegate('.entrance-bottom-frame-line-button','click', function(){
+	$(document).delegate('#question .entrance-bottom-frame-line-button','click', function(){
 		let $this = $(this);
 		$(this).addClass('active').siblings().removeClass('active');
 		that.answer($this.attr('data-type'), Number($this.attr('data-score')));
@@ -646,8 +646,6 @@ Toelf.prototype.activeQuestion = function(index){
 		qu.html(replace);
 		//qu.html(qu.html().replace(highlight,"<h3>"+highlight+"</h3>"))
 	}
-	//console.log(qu.html().replace(highlight,"<h3>"+highlight+"</h3>"));
-	console.log(99999);
 }
 
 function ToelfAdvance(questions,score, after){
@@ -802,6 +800,10 @@ ToelfAdvance.prototype.bindAction = function(){
 		$('.readpanel').show();
 		//that.answer($this.attr('data-type'), Number($this.attr('data-score')));
 		//that.nextQuestion()
+
+		$('.paneltab li').eq(1).addClass('active').siblings().removeClass('active');
+		$('.panelbox .panel').eq(1).addClass('active').siblings().removeClass('active');
+
 	});
 
 	$('.paneltab li:first-child').addClass('active');
