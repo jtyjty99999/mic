@@ -241,9 +241,8 @@
 				// 词汇语法之后，判断分数，再进入阅读理解
 				new Toelf(data1, function (score) {
 					// 比较差
+					let data = count(score);
 					if (score.match < 6 || score.single < 6) {
-
-						let data = count(score);
 						data.rank = 0;
 
 						$(document).dialog({
