@@ -157,6 +157,8 @@ exports.main = function* () {
   const style_id = body.style_id;
   const column_id = body.column_id;
   const keystring = body.keystring;
+  const demo_description = body.demo_description;
+  const demo_pic = body.demo_pic;
   const price = body.price;
   const business = body.business;
   const time = body.time;
@@ -178,6 +180,8 @@ exports.main = function* () {
       work_id,
       name,
       description,
+      demo_description,
+      demo_pic,
       category_id,
       price,
       business,
@@ -213,6 +217,8 @@ exports.main = function* () {
       work_id,
       name,
       description,
+      demo_description,
+      demo_pic,
       category_id,
       price,
       business,
