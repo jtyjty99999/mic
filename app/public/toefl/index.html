@@ -167,11 +167,6 @@
 	<!--<script src="assets/js/vconsole.min.js"></script>-->
 	<script type="text/javascript">
 		//var vConsole = new VConsole();	
-/*
-		audiojs.events.ready(function () {
-			var as = audiojs.createAll();
-		});
-*/
 		function getQueryString(name) {
 			var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
 			var r = window.location.search.substr(1).match(reg); //获取url中"?"符后的字符串并正则匹配
@@ -277,6 +272,7 @@
 								name: '点击确认',
 								callback: function () {
 									navigate('#question2');
+									var as = audiojs.createAll();
 									new ToelfAdvance(data2,score, function (score) {
 										$(document).dialog({
 											titleText: '',
