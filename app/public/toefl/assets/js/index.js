@@ -1222,16 +1222,16 @@ function renderScoreTemplate(data){
 		<h3>各项能力</h3>
 
 		<ul>
-			<li> 词汇 <span class="process"></span> {{wordAb}}</li>
-			<li> 语法 <span class="process"></span>  {{graAb}}</li>
+			<li> 词汇 <span class="process" style="width:{{wordAb/10*0.8*4.6}}rem"></span></li>
+			<li> 语法 <span class="process" style="width:{{graAb/10*0.8*4.6}}rem"></span>  </li>
 			{% if rank === 1 %}
-			<li> 阅读 <span class="process"></span>  {{readAb}}</li>
-			<li> 听力 <span class="process"></span>  {{listenAb}}</li>
+			<li> 阅读 <span class="process" style="width:{{readAb/10*0.8*4.6}}rem"></span> </li>
+			<li> 听力 <span class="process" style="width:{{listenAb/10*0.8*4.6}}rem"></span> </li>
 			{% endif %}
 		</ul>
 
 		<h3>名师点评</h3>
-		<ul>
+		<ul class="comment-box">
 			<li> 词汇: <span class="comment">{{wordText}}</span> </li>
 			<li> 语法: <span class="comment">{{graText}}</span> </li>
 			{% if rank === 1 %}
@@ -1242,21 +1242,19 @@ function renderScoreTemplate(data){
 
 	</div>
 
-	{% if rank === 1 %}
 
 	<div class="card-title card-title2"></div>
 	<div class="card">
 
 		<div class="class-recommand">
-			<div class="class-img">
-			</div>
+			<a class="class-img"  href="https://ke.youdao.com/tag/1704?Pdt=CourseWeb">
+			</a>
 			<div class="class-title-box">
 					<span class="class-title class-title1">托福</span>
 					<span class="class-title class-title2">托福高分突破特训</span>
-					<span class="class-title class-title3">1888币</span>
 			</div>
 			<div class="class-title-box">
-					<span class="class-title class-title4">开课时间：2018.09.15 13:00</span>
+					<span class="class-title class-title4">开课时间：2019.3.20</span>
 					<span class="class-title class-title5">80课时</span>
 			</div>
 
@@ -1273,26 +1271,6 @@ function renderScoreTemplate(data){
 		<button class="action-button teacher-button">咨询顾问</button>
 		<a class="action-button call-button" href="tel:18248466889">拨打电话</a>
 	</div>
-
-	{% endif %}
-
-
-	{% if rank === 0 %}
-
-		<div class="card-title card-title3"></div>
-		<div class="card">
-				<span class="card-longtext">
-						你的备考计划已经生成！我们将为你发送详细的报告并有机会领取一次免费1对1备考指导。通过以下方式获取。
-				</span>
-				<h3>方式一、电话预约</h3>
-				<input type="text" placeholder="输入电话领取详细报告和备考指导">  <button class="send">发送</button>
-				<h3>方式二、添加老师微信</h3>
-				<img src="/assets/img/wechat.png">
-				<h4>如有任何问题，欢迎致电咨询或咨询顾问</h4>
-				<button class="action-button teacher-button">咨询顾问</button>
-				<a class="action-button call-button" href="tel:18248466889">拨打电话</a>
-		</div>
-	{% endif %}
 
 
 </div>`
@@ -1334,7 +1312,7 @@ function renderToeflScoreTemplate(data){
 		</span>
 
 		<h3>名师点评</h3>
-		<ul>
+		<ul class="comment-box">
 			<li> 写作: <span class="comment">{{writeText}}</span> </li>
 			<li> 口语: <span class="comment">{{speakText}}</span> </li>
 			<li> 阅读: <span class="comment">{{readText}}</span> </li>
@@ -1349,15 +1327,14 @@ function renderToeflScoreTemplate(data){
 	<div class="card">
 
 		<div class="class-recommand">
-			<div class="class-img">
-			</div>
+			<a class="class-img" href="https://ke.youdao.com/tag/1704?Pdt=CourseWeb">
+			</a>
 			<div class="class-title-box">
 					<span class="class-title class-title1">托福</span>
 					<span class="class-title class-title2">托福高分突破特训</span>
-					<span class="class-title class-title3">1888币</span>
 			</div>
 			<div class="class-title-box">
-					<span class="class-title class-title4">开课时间：2018.09.15 13:00</span>
+					<span class="class-title class-title4">开课时间：2019.3.20</span>
 					<span class="class-title class-title5">80课时</span>
 			</div>
 

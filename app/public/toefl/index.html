@@ -39,7 +39,7 @@
 		<div class="entrance-bottom">
 			<h4 class="record-title">请输入你的托福真考成绩总分数，帮助我们直接了解你的能力，以推荐更合适的课程。</h4>
 			<h3>托福总分</h3>
-			<input type="text" placeholder="请输入托福总分" id="toelf-score">
+			<input type="number" placeholder="请输入托福总分" id="toelf-score">
 			<button class="next-button button" id="record-next">下一步</button>
 		</div>
 	</div>
@@ -194,26 +194,34 @@
 		});
 
 		$(document).delegate('#record-submit', 'click', function () {
+			let val = picker2.getValue();
 			let score = {
 				wholeScore:window.toelfScore,
-				read:picker2.value[0],
-				write:picker2.value[1],
-				listen:picker2.value[2],
-				speak:picker2.value[3]
+				read:val[1],
+				write:val[3],
+				listen:val[0],
+				speak:val[2]
+			}
+			if((val[0] + val[1] +val[2] + val[3]) !== parseInt(window.toelfScore)){
+				alert('你的分项分数与输入总分不符哦');
+				return
 			}
 			let data = countToelf(score);
 			navigate('#landing-detail');
-			console.log(data);
 			renderToeflScoreTemplate(data);
 		});
 
 		$(document).delegate('#record-next', 'click', function () {
+			if($('#toelf-score').val() > 120){
+				alert('请输入正确的分数');
+				return
+			}
 			navigate('#record', function () {
 				window.toelfScore = $('#toelf-score').val();
 				$('#record-whole').text(window.toelfScore);
 
 				var arr2 = new Array();
-				for (var i = 1; i < 26; i++) {
+				for (var i = 1; i < 31; i++) {
 					arr2.push(i);
 				}
 				var record = arr2.map(function (name, idx) {
@@ -324,8 +332,8 @@
 			};
 
 			navigate('#landing-detail');
-			renderScoreTemplate(d)
-			*/
+			renderScoreTemplate(d)*/
+			
 			/*
 			navigate('#question2');
 										new ToelfAdvance(data2, function (score) {

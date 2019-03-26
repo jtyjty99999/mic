@@ -642,10 +642,11 @@ display: block
     height:auto
 }
 .class-img{
-    background: url('../img/school.png');
+    background: url('../img/school2.png');
     background-size: cover;
     width:6.1rem;
     height:3rem;
+    display: block
 }
 .class-title{
     display: inline-block;
@@ -859,6 +860,19 @@ display: block
     border-left: 0.07rem solid rgba(59,157,255,1);
 }
 .card .process{
+    
+    height:0.14rem;
+    background:rgb(0, 128, 255);
+    border-radius:0.1rem;
+    display: inline-block;
+    position: relative;
+}
+
+.card .process:before{
+    content:'';
+    position: absolute;
+    top:0;
+    left:0;
     width:4.6rem;
     height:0.14rem;
     background:rgba(196,196,196,1);
@@ -879,6 +893,10 @@ display: block
     font-weight: 300;
     color:rgba(58,58,58,1);
     line-height:0.42rem;
+}
+
+.comment-box li{
+    margin-bottom:0.4rem
 }
 
 .card-prefix{
