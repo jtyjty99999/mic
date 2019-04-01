@@ -207,7 +207,7 @@
 		});
 
 		$(document).delegate('#record-next', 'click', function () {
-			if($('#toelf-score').val() > 120){
+			if($('#toelf-score').val() > 120 || /^\d+$/.test($('#toelf-score').val())!==true){
 				alert('请输入正确的分数');
 				return
 			}
